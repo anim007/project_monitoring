@@ -1,0 +1,20 @@
+label {
+    margin-bottom: .15rem;
+}
+
+.content-header {
+    padding: .5rem;
+}
+
+.btn-group-sm>.btn, .btn-sm {
+    padding: .2rem .4rem;
+}
+
+/* Toast Widget */
+.toast {
+    min-width: 300px;
+}
+.toasts-top-right {
+    top: 1rem;
+    right: .5rem;
+}
