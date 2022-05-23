@@ -15,6 +15,7 @@ use app\models\forms\ResetPasswordForm;
 use app\models\forms\PasswordResetRequestForm;
 use app\models\forms\VerifyEmailForm;
 use app\models\forms\ResendVerificationEmailForm;
+use app\models\forms\SignupForm;
 
 class SiteController extends Controller
 {
@@ -132,6 +133,26 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * Signs user up.
+     *
+     * @return mixed
+     */
+    public function actionSignup()
+    {
+        $this->layout = 'main-login';
+        
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            return $this->goHome();
+        }
+
+        return $this->render('signup', [
+            'model' => $model,
+        ]);
     }
 
     /**

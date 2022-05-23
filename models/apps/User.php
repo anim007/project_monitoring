@@ -29,13 +29,14 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public $old_password, $new_password, $re_password, $aktif;
 
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return '{{%y_user}}';
     }
 
     /**
@@ -54,8 +55,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['username', 'unique', 'targetAttribute' => ['username']],
+            ['email', 'unique', 'targetAttribute' => ['email']],
+            [['username', 'email'], 'required', 'on' => ['profile']],
+            [['old_password', 'new_password', 're_password'], 'required', 'on' => ['change-password']],
+            [['aktif'], 'integer'],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'old_password' => Yii::t('app', 'Password Lama'),
+            'new_password' => Yii::t('app', 'Password Baru'),
+            're_password' => Yii::t('app', 'Ulangi Password Baru'),
+            'aktif' => Yii::t('app', 'Aktif'),
         ];
     }
 
@@ -210,5 +229,35 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getYUserRoles()
+    {
+        return $this->hasMany(YUserRole::className(), ['y_user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getYRoleIDs()
+    {
+        $ids = array();
+        foreach ($this->yUserRoles as $role)
+            $ids[] = $role->y_role_id;
+        return $ids;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getYUserRoleIDs()
+    {
+        $ids = array();
+        foreach ($this->yUserRoles as $role)
+            $ids[] = $role->y_user_role_id;
+        return $ids;
     }
 }

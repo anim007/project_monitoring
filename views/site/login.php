@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 ?>
 <div class="card">
     <div class="card-body login-card-body">
@@ -54,7 +56,7 @@ use yii\helpers\Html;
             <a href="forgot-password.html">I forgot my password</a>
         </p>
         <p class="mb-0">
-            <a href="register.html" class="text-center">Register a new membership</a>
+            <a href="<?= Url::to(['/site/signup']) ?>" class="text-center">Register a new membership</a>
         </p>
     </div>
     <!-- /.login-card-body -->
