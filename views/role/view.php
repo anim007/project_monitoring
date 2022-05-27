@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="yrole-view">
                     <div class="body table-responsive no-padding">
                         <?= DetailView::widget([
+                            'options' => ['class' => 'table table-sm table-striped table-bordered detail-view'],
                             'model' => $model,
                             'attributes' => [
                                 'nama',

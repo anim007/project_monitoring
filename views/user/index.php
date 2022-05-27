@@ -17,12 +17,12 @@ $listStatusUser = ListComponent::getListStatusUser();
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
+            <div class="card-header">
+                <?= Html::a('<i class="fas fa-plus"></i> Tambah User', ['create'], ['class' => 'btn btn-success']) ?>
+            </div>
             <div class="card-body">
                 <div class="user-index">
                     <?php Pjax::begin(); ?>
-
-                    <?= Html::a('<i class="fas fa-plus"></i> Tambah User', ['create'], ['class' => 'btn btn-success']) ?>
-                    <br><br>
                     <div class="body table-responsive table-stats order-table ov-h">
                         <?php // echo $this->render('_search', ['model' => $searchModel]); 
                         ?>
