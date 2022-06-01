@@ -53,4 +53,23 @@ class ListComponent extends \yii\base\Component
         ];
         return $listData;
     }
+
+    public static function getListPartnerType()
+    {
+        $listData = [
+            'employee' => 'Employee',
+            'vendor' => 'Vendor',
+            'customer' => 'Customer', 
+        ];
+        return $listData;
+    }
+
+    public static function getListDataStatus()
+    {
+        $listData = [
+            '0' => 'Tidak Aktif',
+            '1' => 'Aktif'
+        ];
+        return $listData;
+    }
 }
