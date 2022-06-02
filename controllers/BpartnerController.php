@@ -48,6 +48,7 @@ class BpartnerController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'type' => $type
         ]);
     }
 
@@ -77,7 +78,7 @@ class BpartnerController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
-            return $this->redirect(['index']);
+            return $this->redirect(['?type='.$type]);
         }
 
         return $this->render('create', [
@@ -98,7 +99,7 @@ class BpartnerController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
-            return $this->redirect(['index']);
+            return $this->redirect(['?type='.$model->type]);
         }
 
         return $this->render('update', [

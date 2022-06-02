@@ -8,14 +8,18 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\search\MBpartnerSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'List Vendor';
+$this->title = 'List ' . ucfirst($type);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="card-header">
-                <?= Html::a('<i class="fas fa-plus"></i> Tambah Vendor', ['create', 'type' => $searchModel->type], ['class' => 'btn btn-success']) ?>
+                <?php if($type == 'vendor'){ ?>
+                    <?= Html::a('<i class="fas fa-plus"></i> Tambah Vendor', ['create', 'type' => $searchModel->type], ['class' => 'btn btn-success']) ?>
+                <?php } else if ($type == 'employee'){ ?>
+                    <?= Html::a('<i class="fas fa-plus"></i> Tambah Employee', ['create', 'type' => $searchModel->type], ['class' => 'btn btn-success']) ?>
+                <?php } ?>
             </div>
             <div class="card-body">
                 <div class="mbpartner-index">
