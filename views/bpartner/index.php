@@ -39,9 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                 'value',
                                 'first_name',
-                                'last_name',
+                                [
+                                    'attribute' => 'last_name',
+                                    'visible' => ($searchModel->type == 'employee'),
+                                ],
                                 [
                                     'attribute' => 'birth_date',
+                                    'visible' => ($searchModel->type == 'employee'),
                                     'format' => 'date',
                                     'filter' => \kartik\date\DatePicker::widget([
                                         'model' => $searchModel,

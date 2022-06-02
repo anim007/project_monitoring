@@ -52,7 +52,7 @@ class MBpartner extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['value', 'first_name', 'last_name', 'birth_date', 'type', 'status'], 'required'],
+            [['value', 'first_name', 'type', 'status'], 'required'],
             [['birth_date'], 'safe'],
             [['address'], 'string'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],

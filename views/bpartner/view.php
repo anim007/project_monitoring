@@ -33,16 +33,25 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attributes' => [
                                 'value',
                                 'first_name',
-                                'last_name',
-                                'birth_date:date',
+                                [
+                                    'label' => 'Last Name',
+                                    'value' => $model->last_name,
+                                    'visible' => ($model->type == 'employee')
+                                ],
+                                [
+                                    'label' => 'Birth Date',
+                                    'value' => $model->birth_date,
+                                    'format' => 'date',
+                                    'visible' => ($model->type == 'employee')
+                                ],
                                 'address:ntext',
                                 'phone',
-                                [
-                                    'label' => 'Type',
-                                    'value' => function($model) {
-                                        return ListComponent::getListPartnerType()[$model->type];
-                                    }
-                                ],
+                                // [
+                                //     'label' => 'Type',
+                                //     'value' => function($model) {
+                                //         return ListComponent::getListPartnerType()[$model->type];
+                                //     }
+                                // ],
                                 [
                                     'label' => 'Active',
                                     'value' => function($model) {
