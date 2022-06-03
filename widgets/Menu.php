@@ -65,12 +65,12 @@ class Menu extends \yii\widgets\Menu
     /**
      * @var string
      */
-    public static $iconDefault = 'circle';
+    public static $iconDefault = 'far fa-circle';
 
     /**
      * @var string
      */
-    public static $iconStyleDefault = 'fas';
+    public static $iconStyleDefault = '';
 
     /**
      * @inheritdoc
@@ -147,9 +147,8 @@ class Menu extends \yii\widgets\Menu
         if (isset($item['iconClass'])) {
             $iconClass = $item['iconClass'];
         } else {
-            $iconStyle = $item['iconStyle'] ?? static::$iconStyleDefault;
             $icon = $item['icon'] ?? static::$iconDefault;
-            $iconClassArr = ['nav-icon', $iconStyle, 'fa-'.$icon];
+            $iconClassArr = ['nav-icon', $icon];
             isset($item['iconClassAdded']) && $iconClassArr[] = $item['iconClassAdded'];
             $iconClass = implode(' ', $iconClassArr);
         }

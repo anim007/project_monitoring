@@ -74,7 +74,7 @@
 
                 $menuItems[$i++] = [
                     'label' => 'Sign Out',
-                    'icon' => 'sign-out-alt',
+                    'icon' => 'fas fa-sign-out-alt',
                     'url' => ['site/logout'],
                     'method' => 'post',
                     'visible' => !Yii::$app->user->isGuest,
