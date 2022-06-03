@@ -2,6 +2,7 @@
 
 namespace app\components;
 
+use app\models\apps\MBpartner;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -45,6 +46,16 @@ class ListComponent extends \yii\base\Component
         return $listData;
     }
 
+    public static function getListBPartner($type = null)
+    {
+        $datas = MBpartner::find()->where(['status' => '1']);
+        if (!is_null($type)) $datas = $datas->andWhere(['type' => $type]);
+        $datas = $datas->all();
+        $listData = ArrayHelper::map($datas, 'm_bpartner_id', 'first_name');
+
+        return $listData;
+    }
+
     public static function getListStatusUser()
     {
         $listData = [
@@ -69,6 +80,26 @@ class ListComponent extends \yii\base\Component
         $listData = [
             '0' => 'Tidak Aktif',
             '1' => 'Aktif'
+        ];
+        return $listData;
+    }
+
+    public static function getListProjectStatus()
+    {
+        $listData = [
+            'upcoming' => 'Upcoming',
+            'onprogress' => 'On Progress',
+            'finish' => 'Finish', 
+        ];
+        return $listData;
+    }
+
+    public static function getListActivityStatus()
+    {
+        $listData = [
+            'open' => 'Open',
+            'onprogress' => 'On Progress',
+            'finish' => 'Finish', 
         ];
         return $listData;
     }
