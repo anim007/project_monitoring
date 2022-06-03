@@ -1,6 +1,7 @@
 <?php
 
 use app\components\ListComponent;
+use app\components\WidgetComponent;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
@@ -23,13 +24,7 @@ use yii\bootstrap4\ActiveForm;
                             <?= $form->field($model, 'value')->textInput(['maxlength' => true])->label(ucfirst($model['type']) . ' Code') ?>
                             <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
                             <?php if($model['type'] == 'employee'){ ?>
-                            <?= $form->field($model, 'birth_date')->widget(DatePicker::class, [
-                                'removeButton' => false,
-                                'pluginOptions' => [
-                                    'autoclose' => true,
-                                    'format' => 'yyyy-mm-dd'
-                                ]
-                            ]) ?>
+                            <?= $form->field($model, 'birth_date')->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
                             <?php } ?>
                         </div>
                         <div class="col-sm-12 col-md-6">
