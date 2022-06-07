@@ -98,6 +98,28 @@ class TProject extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[Perencanaans]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPerencanaans()
+    {
+        return $this->hasMany(TActivity::className(), ['t_project_id' => 'm_project_id'])
+            ->andOnCondition(['finish_date' => null]);
+    }
+
+    /**
+     * Gets query for [[Realisasis]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRealisasis()
+    {
+        return $this->hasMany(TActivity::className(), ['t_project_id' => 'm_project_id'])
+            ->andOnCondition(['NOT', 'finish_date', null]);
+    }
+
+    /**
      * Gets query for [[TActivityDocs]].
      *
      * @return \yii\db\ActiveQuery

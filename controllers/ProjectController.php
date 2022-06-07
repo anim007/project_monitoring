@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\apps\TProject;
+use app\models\search\TActivitySearch;
 use app\models\search\TProjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -52,8 +53,18 @@ class ProjectController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $searchModelActivity = new TActivitySearch();
+        $dataProviderPerencanaan = $searchModelActivity->search(Yii::$app->request->queryParams);
+        $dataProviderPerencanaan->query->andWhere(['finish_date' => NULL]);
+        $dataProviderRealisasi = $searchModelActivity->search(Yii::$app->request->queryParams);
+        $dataProviderRealisasi->query->andWhere(['NOT', 'finish_date', NULL]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'searchModelActivity' => $searchModelActivity,
+            'dataProviderPerencanaan' => $dataProviderPerencanaan,
+            'dataProviderRealisasi' => $dataProviderRealisasi,
         ]);
     }
 
