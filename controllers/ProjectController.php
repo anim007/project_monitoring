@@ -86,7 +86,9 @@ class ProjectController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $model->start_date = date('Y-m-d', strtotime($model->start_date));
+        $model->finish_date = date('Y-m-d', strtotime($model->finish_date));
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
             return $this->redirect(['index']);

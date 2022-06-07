@@ -17,8 +17,8 @@ class TProjectSearch extends TProject
     public function rules()
     {
         return [
-            [['m_project_id', 'm_bpartner_id', 'pic_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['value', 'name', 'start_date', 'finish_date'], 'safe'],
+            [['m_project_id', 'm_bpartner_id', 'pic_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['value', 'name', 'start_date', 'finish_date', 'status'], 'safe'],
         ];
     }
 

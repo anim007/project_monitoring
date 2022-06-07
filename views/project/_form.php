@@ -26,14 +26,24 @@ $listVendor = ListComponent::getListBPartner('vendor');
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
-                            <?= $form->field($model, 'm_bpartner_id')->widget(Select2::class, WidgetComponent::select2ModelConfig($listVendor, 'PILIH VENDOR')) ?>
-                            <?= $form->field($model, 'start_date')->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
-                            <?= $form->field($model, 'status')->radioList(ListComponent::getListProjectStatus()) ?>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <?= $form->field($model, 'm_bpartner_id')->widget(Select2::class, WidgetComponent::select2ModelConfig($listVendor, 'PILIH VENDOR')) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'pic_id')->widget(Select2::class, WidgetComponent::select2ModelConfig($listPIC, 'PILIH PIC')) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <?= $form->field($model, 'start_date')->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'finish_date')->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <?= $form->field($model, 'status')->radioList(ListComponent::getListProjectStatus()) ?>
                         </div>
                     </div>
                 </div>

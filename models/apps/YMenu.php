@@ -38,7 +38,8 @@ class YMenu extends \yii\db\ActiveRecord
             [['nama', 'url', 'aktif'], 'required'],
             [['parent_id', 'aktif'], 'integer'],
             [['nama', 'url'], 'string', 'max' => 256],
-            [['icon', 'group'], 'string', 'max' => 20],
+            [['group'], 'string', 'max' => 20],
+            [['icon'], 'string', 'max' => 50],
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => YMenu::className(), 'targetAttribute' => ['parent_id' => 'id']],
         ];
     }
