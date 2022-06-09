@@ -43,7 +43,7 @@ $listVendor = ListComponent::getListBPartner('vendor');
                             <?= $form->field($model, 'finish_date')->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <?= $form->field($model, 'status')->radioList(ListComponent::getListProjectStatus()) ?>
+                            <?= $form->field($model, 'status')->dropdownList(ListComponent::getListProjectStatus()) ?>
                         </div>
                     </div>
                 </div>

@@ -32,7 +32,7 @@ use yii\helpers\Url;
                         return ListComponent::getListActivityType()[$model->type];
                     }
                 ],
-                'descripiton:ntext',
+                // 'descripiton:ntext',
                 'heaviness',
                 'start_date:date',
                 'est_finish_date:date',

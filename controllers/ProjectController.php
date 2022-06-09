@@ -57,8 +57,10 @@ class ProjectController extends Controller
         $searchModelActivity = new TActivitySearch();
         $dataProviderPerencanaan = $searchModelActivity->search(Yii::$app->request->queryParams);
         $dataProviderPerencanaan->query->andWhere(['finish_date' => NULL]);
+        $dataProviderPerencanaan->query->andWhere(['t_project_id' => $id]);
         $dataProviderRealisasi = $searchModelActivity->search(Yii::$app->request->queryParams);
         $dataProviderRealisasi->query->andWhere(['NOT', ['finish_date' => NULL]]);
+        $dataProviderRealisasi->query->andWhere(['t_project_id' => $id]);
 
         return $this->render('view', [
             'model' => $model,
