@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\apps\TProject;
+use app\models\apps\TActivity;
 use app\models\search\TActivitySearch;
-use app\models\search\TProjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProjectController implements the CRUD actions for TProject model.
+ * ActivityController implements the CRUD actions for TActivity model.
  */
-class ProjectController extends Controller
+class ActivityController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -31,12 +30,12 @@ class ProjectController extends Controller
     }
 
     /**
-     * Lists all TProject models.
+     * Lists all TActivity models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TProjectSearch();
+        $searchModel = new TActivitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,39 +45,33 @@ class ProjectController extends Controller
     }
 
     /**
-     * Displays a single TProject model.
+     * Displays a single TActivity model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $searchModelActivity = new TActivitySearch();
-        $dataProviderPerencanaan = $searchModelActivity->search(Yii::$app->request->queryParams);
-        $dataProviderPerencanaan->query->andWhere(['finish_date' => NULL]);
-        $dataProviderRealisasi = $searchModelActivity->search(Yii::$app->request->queryParams);
-        $dataProviderRealisasi->query->andWhere(['NOT', ['finish_date' => NULL]]);
-
         return $this->render('view', [
-            'model' => $model,
-            'searchModelActivity' => $searchModelActivity,
-            'dataProviderPerencanaan' => $dataProviderPerencanaan,
-            'dataProviderRealisasi' => $dataProviderRealisasi,
+            'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new TProject model.
+     * Creates a new TActivity model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($project_id = null)
     {
-        $model = new TProject();
+        $model = new TActivity();
+        $model->t_project_id = $project_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
+            
+            if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+
             return $this->redirect(['index']);
         }
 
@@ -88,20 +81,21 @@ class ProjectController extends Controller
     }
 
     /**
-     * Updates an existing TProject model.
+     * Updates an existing TActivity model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $project_id = null)
     {
         $model = $this->findModel($id);
-        $model->start_date = date('Y-m-d', strtotime($model->start_date));
-        $model->finish_date = date('Y-m-d', strtotime($model->finish_date));
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
+            
+            if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+
             return $this->redirect(['index']);
         }
 
@@ -111,29 +105,31 @@ class ProjectController extends Controller
     }
 
     /**
-     * Deletes an existing TProject model.
+     * Deletes an existing TActivity model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $project_id = null)
     {
         $this->findModel($id)->delete();
+
+        if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the TProject model based on its primary key value.
+     * Finds the TActivity model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return TProject the loaded model
+     * @return TActivity the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = TProject::findOne($id)) !== null) {
+        if (($model = TActivity::findOne($id)) !== null) {
             return $model;
         }
 

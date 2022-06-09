@@ -3,6 +3,7 @@
 namespace app\components;
 
 use app\models\apps\MBpartner;
+use app\models\apps\TProject;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -56,6 +57,16 @@ class ListComponent extends \yii\base\Component
         return $listData;
     }
 
+    public static function getListProject($status = null)
+    {
+        $datas = TProject::find();
+        if (!is_null($status)) $datas = $datas->andWhere(['status' => $status]);
+        $datas = $datas->all();
+        $listData = ArrayHelper::map($datas, 'm_project_id', 'name');
+
+        return $listData;
+    }
+
     public static function getListStatusUser()
     {
         $listData = [
@@ -100,6 +111,16 @@ class ListComponent extends \yii\base\Component
             'open' => 'Open',
             'onprogress' => 'On Progress',
             'finish' => 'Finish', 
+        ];
+        return $listData;
+    }
+
+    public static function getListActivityType()
+    {
+        $listData = [
+            'persiapan' => 'Perisapan',
+            'pelaksanaan' => 'Pelaksanaan',
+            'pengumpulan' => 'Pengumpulan', 
         ];
         return $listData;
     }
