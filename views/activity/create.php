@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\apps\TActivity */
 
 $this->title = 'Tambah Activity';
-$this->params['breadcrumbs'][] = ['label' => 'List Activity', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => ['/project/view?id='.$model->t_project_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tactivity-create">

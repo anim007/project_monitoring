@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\apps\TActivity;
+use app\models\apps\TProject;
 use app\models\search\TActivitySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -54,6 +55,7 @@ class ActivityController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'project' => TProject::findOne($this->findModel($id)->t_project_id),
         ]);
     }
 
@@ -66,17 +68,23 @@ class ActivityController extends Controller
     {
         $model = new TActivity();
         $model->t_project_id = $project_id;
+        $project = TProject::findOne($project_id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
-            
-            if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if(Yii::$app->request->post()['TActivity']['status'] != 'finish') $model->finish_date = null;
 
-            return $this->redirect(['index']);
+            if($model->save()){
+                Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
+                
+                if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+
+                return $this->redirect(['/project/view', 'id' => $project_id]);
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'project' => $project,
         ]);
     }
 
@@ -90,17 +98,27 @@ class ActivityController extends Controller
     public function actionUpdate($id, $project_id = null)
     {
         $model = $this->findModel($id);
+        $project = TProject::findOne($project_id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
-            
-            if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+        $model->start_date = date('Y-m-d', strtotime($model->start_date));
+        $model->est_finish_date = date('Y-m-d', strtotime($model->est_finish_date));
+        if(isset($model->finish_date)) $model->finish_date = date('Y-m-d', strtotime($model->finish_date));
 
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post())) {
+            if(Yii::$app->request->post()['TActivity']['status'] != 'finish') $model->finish_date = null;
+
+            if($model->save()){
+                Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
+                
+                if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'project' => $project,
         ]);
     }
 

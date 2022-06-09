@@ -54,7 +54,7 @@ class TActivity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['t_project_id', 'name', 'heaviness', 'start_date', 'type', 'status'], 'required'],
+            [['t_project_id', 'name', 'heaviness', 'start_date', 'est_finish_date', 'type', 'status'], 'required'],
             [['t_project_id', 'heaviness', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['descripiton'], 'string'],
             [['start_date', 'est_finish_date', 'finish_date'], 'safe'],

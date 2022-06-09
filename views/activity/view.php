@@ -6,15 +6,16 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\apps\TActivity */
 
-$this->title = 'Detail Activity ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'List Activity', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Detail Activity : ' . $model->name;
+// $this->params['breadcrumbs'][] = ['label' => 'List Activity', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => ['/project/view?id='.$model->t_project_id]];
+$this->params['breadcrumbs'][] = $model->name;
 ?>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="card-header">
-                <?= Html::a('<i class="fas fa-pencil-alt"></i> Update', ['update', 'id' => $model->t_activity_id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('<i class="fas fa-pencil-alt"></i> Update', ['update', 'id' => $model->t_activity_id, 'project_id' => $model->t_project_id], ['class' => 'btn btn-primary']) ?>
                 <?= Html::a('<i class="far fa-trash-alt"></i> Delete', ['delete', 'id' => $model->t_activity_id], [
                     'class' => 'btn btn-danger',
                     'data' => [
