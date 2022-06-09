@@ -30,19 +30,24 @@ $this->params['breadcrumbs'][] = $this->title;
                             'options' => ['class' => 'table table-sm table-striped table-bordered detail-view'],
                             'model' => $model,
                             'attributes' => [
-                                't_activity_id',
-                                't_project_id',
-                                'name',
+                                // 't_activity_id',
+                                'tProject.name:text:Project',
+                                'name:text:Activity',
                                 'descripiton:ntext',
                                 'heaviness',
-                                'start_date',
-                                'est_finish_date',
-                                'finish_date',
-                                'status',
+                                'start_date:date',
+                                'est_finish_date:date',
+                                'finish_date:date',
+                                [
+                                    'label' => 'Status',
+                                    'value' => function ($model) {
+                                        return \app\components\ListComponent::getListActivityStatus()[$model->status];
+                                    }
+                                ],
                                 'created_at:datetime',
-                                'created_by',
+                                'createdBy.username:text:Created By',
                                 'updated_at:datetime',
-                                'updated_by',
+                                'createdBy.username:text:Updated By',
                             ],
                         ]) ?>
                     </div>
