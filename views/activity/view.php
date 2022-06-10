@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $model->name;
         <div class="card">
             <div class="card-header">
                 <?= Html::a('<i class="fas fa-pencil-alt"></i> Update', ['update', 'id' => $model->t_activity_id, 'project_id' => $model->t_project_id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('<i class="far fa-trash-alt"></i> Delete', ['delete', 'id' => $model->t_activity_id], [
+                <?= Html::a('<i class="far fa-trash-alt"></i> Delete', ['delete', 'id' => $model->t_activity_id, 'project_id' => $model->t_project_id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => 'Are you sure you want to delete this item?',
