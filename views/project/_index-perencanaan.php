@@ -14,14 +14,16 @@ use yii\helpers\Url;
 
 <div class="perencanaan-index">
     <?php \yii\widgets\Pjax::begin(); ?>
+    
+    <?php echo $this->render('_search-perencanaan', ['model' => $searchModelPerencanaan, 'pid' => $model->m_project_id]); ?>
+    <hr class="mt-0"/>
+
     <div class="body table-responsive">
-        <?php // echo $this->render('_search', ['model' => $searchModel]); 
-        ?>
 
         <?= \yii\grid\GridView::widget([
             'dataProvider' => $dataProviderPerencanaan,
             'tableOptions' => ['class' => 'table table-sm table-hover text-nowrap'],
-            'filterModel' => $searchModelActivity,
+            // 'filterModel' => $searchModelPerencanaan,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
@@ -36,17 +38,12 @@ use yii\helpers\Url;
                 'heaviness',
                 'start_date:date',
                 'est_finish_date:date',
-                // 'finish_date',
                 [
                     'attribute' => 'status',
                     'value' => function ($model) {
                         return ListComponent::getListActivityStatus()[$model->status];
                     }
                 ],
-                //'created_at',
-                //'created_by',
-                //'updated_at',
-                //'updated_by',
 
                 [
                     'class' => 'app\widgets\ActionColumn',

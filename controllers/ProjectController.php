@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\apps\TProject;
+use app\models\search\TActivityRealisasiSearch;
 use app\models\search\TActivitySearch;
 use app\models\search\TProjectSearch;
 use yii\web\Controller;
@@ -54,17 +55,19 @@ class ProjectController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $searchModelActivity = new TActivitySearch();
-        $dataProviderPerencanaan = $searchModelActivity->search(Yii::$app->request->queryParams);
+        $searchModelPerencanaan = new TActivitySearch();
+        $searchModelRealisasi = new TActivityRealisasiSearch();
+        $dataProviderPerencanaan = $searchModelPerencanaan->search(Yii::$app->request->queryParams);
         $dataProviderPerencanaan->query->andWhere(['finish_date' => NULL]);
         $dataProviderPerencanaan->query->andWhere(['t_project_id' => $id]);
-        $dataProviderRealisasi = $searchModelActivity->search(Yii::$app->request->queryParams);
+        $dataProviderRealisasi = $searchModelRealisasi->search(Yii::$app->request->queryParams);
         $dataProviderRealisasi->query->andWhere(['NOT', ['finish_date' => NULL]]);
         $dataProviderRealisasi->query->andWhere(['t_project_id' => $id]);
 
         return $this->render('view', [
             'model' => $model,
-            'searchModelActivity' => $searchModelActivity,
+            'searchModelPerencanaan' => $searchModelPerencanaan,
+            'searchModelRealisasi' => $searchModelRealisasi,
             'dataProviderPerencanaan' => $dataProviderPerencanaan,
             'dataProviderRealisasi' => $dataProviderRealisasi,
         ]);

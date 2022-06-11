@@ -6,16 +6,17 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="perencanaan-index">
+<div class="realisasi-index">
     <?php \yii\widgets\Pjax::begin(); ?>
-    <div class="body table-responsive">
-        <?php // echo $this->render('_search', ['model' => $searchModel]); 
-        ?>
 
+    <?php echo $this->render('_search-realisasi', ['model' => $searchModelRealisasi, 'pid' => $model->m_project_id]); ?>
+    <hr class="mt-0"/>
+
+    <div class="body table-responsive">
         <?= \yii\grid\GridView::widget([
             'dataProvider' => $dataProviderRealisasi,
             'tableOptions' => ['class' => 'table table-sm table-hover text-nowrap'],
-            'filterModel' => $searchModelActivity,
+            // 'filterModel' => $searchModelRealisasi,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
@@ -37,10 +38,6 @@ use yii\helpers\Url;
                         return ListComponent::getListActivityStatus()[$model->status];
                     }
                 ],
-                //'created_at',
-                //'created_by',
-                //'updated_at',
-                //'updated_by',
 
                 [
                     'class' => 'app\widgets\ActionColumn',

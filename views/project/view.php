@@ -50,7 +50,8 @@ $tabs = [
                                 <div class="tab-pane fade <?= $key == 0 ? 'show active' : '' ?>" id="custom-tabs-four-<?= $tab ?>" role="tabpanel" aria-labelledby="custom-tabs-four-<?= $tab ?>-tab">
                                     <?= $this->render('_index-' . strtolower($tab), [
                                         'model' => $model,
-                                        'searchModelActivity' => $searchModelActivity,
+                                        'searchModelPerencanaan' => $searchModelPerencanaan,
+                                        'searchModelRealisasi' => $searchModelRealisasi,
                                         'dataProviderPerencanaan' => $dataProviderPerencanaan,
                                         'dataProviderRealisasi' => $dataProviderRealisasi,
                                     ]) ?>
