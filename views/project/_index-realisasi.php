@@ -42,10 +42,14 @@ use yii\helpers\Url;
                 [
                     'class' => 'app\widgets\ActionColumn',
                     'headerOptions' => ['width' => '100'],
-                    'template' => '{view}',
+                    'template' => '{view} {update}',
                     'urlCreator' => function ($action, $model, $key, $index) {
                         if ($action === 'view') {
                             $url = Url::to(['/activity/view', 'id' => $model->t_activity_id]);
+                            return $url;
+                        }
+                        if ($action === 'update') {
+                            $url = Url::to(['/activity/update', 'id' => $model->t_activity_id, 'project_id' => $model->t_project_id]);
                             return $url;
                         }
                     }

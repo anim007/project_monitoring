@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
             <label for="button">&nbsp;</label>
             <div class="form-group">
                 <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Reset', ['view'], ['class' => 'btn btn-default']) ?>
+                <?= Html::a('Reset', ['view?id=' . $pid], ['class' => 'btn btn-default']) ?>
             </div>
         </div>
     </div>
