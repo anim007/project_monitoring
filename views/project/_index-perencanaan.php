@@ -48,6 +48,7 @@ use yii\helpers\Url;
                 [
                     'class' => 'app\widgets\ActionColumn',
                     'headerOptions' => ['width' => '100'],
+                    'template' => '{view} {delete}',
                     'urlCreator' => function ($action, $model, $key, $index) {
                         if ($action === 'view') {
                             $url = Url::to(['/activity/view', 'id' => $model->t_activity_id, 'project_id' => $model->t_project_id]);
