@@ -15,7 +15,9 @@ use yii\bootstrap4\ActiveForm;
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card <?= Yii::$app->params['cardOptions'] ?>">
             <div class="tdaily-report-form">
-                <?php $form = ActiveForm::begin(); ?>
+                <?php $form = ActiveForm::begin(
+                    ['options' => [['enctype' => 'multipart/form-data']]]
+                ); ?>
                 <div class="card-header">
                     <h3 class="card-title">Form <?= $this->title ?></h3>
                 </div>
@@ -40,7 +42,7 @@ use yii\bootstrap4\ActiveForm;
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <?= $form->field($model, 'file_path')->fileInput() ?>
+                            <?= $form->field($model, 'file1')->fileInput() ?>
                         </div>
                     </div>
                     <div class="row">

@@ -80,6 +80,7 @@ class TDailyReport extends \yii\db\ActiveRecord
             't_project_id' => Yii::t('app', 'Project'),
             'date' => Yii::t('app', 'Date'),
             'file_path' => Yii::t('app', 'Attachment'),
+            'file1' => Yii::t('app', 'Attachment'),
             'description' => Yii::t('app', 'Description'),
             'work_hour_1' => Yii::t('app', 'Noon WH'),
             'work_hour_2' => Yii::t('app', 'Night WH'),
@@ -152,7 +153,8 @@ class TDailyReport extends \yii\db\ActiveRecord
         }
 
         if (!is_null($model[$attr])) {
-            $path = 'files/images/laporan/' . '_' . date('YmdHis') . '_' . $model[$attr]->name;
+            $path = 'files/images/laporan/'  . 'att_' . date('YmdHis') . '_' . $model[$attr]->name;
+            $model[$attr]->saveAs($path);
             if ($old_url != null && !empty($old_url)) {
                 $old_url = Yii::$app->basePath . '/web/' . $old_url;
                 if (is_dir($old_url)) unlink($old_url);

@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\apps\TDailyReport */
 
 $this->title = 'Detail Daily Report ' . date('d M Y', strtotime($model->date));
-$this->params['breadcrumbs'][] = ['label' => 'List Daily Report', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'List Daily Report', 'url' => ['/project/view', 'id' => $model->t_project_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row clearfix">
@@ -26,48 +26,54 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="card-body">
                 <div class="tdaily-report-view">
-                    <div class="body table-responsive">
-                        <?= DetailView::widget([
-                            'options' => ['class' => 'table table-sm table-striped table-bordered detail-view'],
-                            'model' => $model,
-                            'attributes' => [
-                                // 't_daily_report_id',
-                                'tProject.name:text:Project Name',
-                                'date:date',
-                                'file_path:ntext',
-                                'description:ntext',
-                                'work_hour_1',
-                                'work_hour_2',
-                                [
-                                    'attribute' => 'weather_1',
-                                    'value' => function($model) {
-                                        return ListComponent::getListWeather()[$model->weather_1];
-                                    }
-                                ],
-                                [
-                                    'attribute' => 'weather_2',
-                                    'value' => function($model) {
-                                        return ListComponent::getListWeather()[$model->weather_2];
-                                    }
-                                ],
-                                [
-                                    'attribute' => 'weather_3',
-                                    'value' => function($model) {
-                                        return ListComponent::getListWeather()[$model->weather_3];
-                                    }
-                                ],
-                                [
-                                    'attribute' => 'weather_4',
-                                    'value' => function($model) {
-                                        return ListComponent::getListWeather()[$model->weather_4];
-                                    }
-                                ],
-                                'created_at:datetime',
-                                'createdBy.username:text:Username',
-                                'updated_at:datetime',
-                                'updatedBy.username:text:Username',
-                            ],
-                        ]) ?>
+                    <div class="body">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <?= DetailView::widget([
+                                    'options' => ['class' => 'table table-sm table-striped table-bordered detail-view'],
+                                    'model' => $model,
+                                    'attributes' => [
+                                        // 't_daily_report_id',
+                                        'tProject.name:text:Project Name',
+                                        'date:date',
+                                        'description:ntext',
+                                        'work_hour_1',
+                                        'work_hour_2',
+                                        [
+                                            'attribute' => 'weather_1',
+                                            'value' => function ($model) {
+                                                return ListComponent::getListWeather()[$model->weather_1];
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'weather_2',
+                                            'value' => function ($model) {
+                                                return ListComponent::getListWeather()[$model->weather_2];
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'weather_3',
+                                            'value' => function ($model) {
+                                                return ListComponent::getListWeather()[$model->weather_3];
+                                            }
+                                        ],
+                                        [
+                                            'attribute' => 'weather_4',
+                                            'value' => function ($model) {
+                                                return ListComponent::getListWeather()[$model->weather_4];
+                                            }
+                                        ],
+                                        'created_at:datetime',
+                                        'createdBy.username:text:Username',
+                                        'updated_at:datetime',
+                                        'updatedBy.username:text:Username',
+                                    ],
+                                ]) ?>
+                            </div>
+                            <div class="col-sm-12 col-md-5">
+                                <img src="<?= Yii::getAlias('@web/') . $model->file_path ?>" alt="image" class="img-thumbnail" width="100%">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
