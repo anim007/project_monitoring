@@ -124,4 +124,13 @@ class ListComponent extends \yii\base\Component
         ];
         return $listData;
     }
+
+    public static function getListWeather()
+    {
+        $listData = [
+            'cerah' => 'Cerah',
+            'hujan' => 'Hujan', 
+        ];
+        return $listData;
+    }
 }

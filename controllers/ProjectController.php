@@ -6,6 +6,7 @@ use Yii;
 use app\models\apps\TProject;
 use app\models\search\TActivityRealisasiSearch;
 use app\models\search\TActivitySearch;
+use app\models\search\TDailyReportSearch;
 use app\models\search\TProjectSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -56,20 +57,27 @@ class ProjectController extends Controller
     {
         $model = $this->findModel($id);
         $searchModelPerencanaan = new TActivitySearch();
-        $searchModelRealisasi = new TActivityRealisasiSearch();
         $dataProviderPerencanaan = $searchModelPerencanaan->search(Yii::$app->request->queryParams);
         // $dataProviderPerencanaan->query->andWhere(['finish_date' => NULL]);
         $dataProviderPerencanaan->query->andWhere(['t_project_id' => $id]);
+        
+        $searchModelRealisasi = new TActivityRealisasiSearch();
         $dataProviderRealisasi = $searchModelRealisasi->search(Yii::$app->request->queryParams);
         // $dataProviderRealisasi->query->andWhere(['NOT', ['finish_date' => NULL]]);
         $dataProviderRealisasi->query->andWhere(['t_project_id' => $id]);
 
+        $searchModelLaporan = new TDailyReportSearch();
+        $dataProviderLaporan = $searchModelLaporan->search(Yii::$app->request->queryParams);
+        $dataProviderLaporan->query->andWhere(['t_project_id' => $id]);
+
         return $this->render('view', [
             'model' => $model,
             'searchModelPerencanaan' => $searchModelPerencanaan,
-            'searchModelRealisasi' => $searchModelRealisasi,
             'dataProviderPerencanaan' => $dataProviderPerencanaan,
+            'searchModelRealisasi' => $searchModelRealisasi,
             'dataProviderRealisasi' => $dataProviderRealisasi,
+            'searchModelLaporan' => $searchModelLaporan,
+            'dataProviderLaporan' => $dataProviderLaporan,
         ]);
     }
 
