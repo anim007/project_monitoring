@@ -65,7 +65,14 @@ use yii\helpers\Url;
                 [
                     'class' => 'app\widgets\ActionColumn',
                     'headerOptions' => ['width' => '100'],
-                    'template' => '{view} {delete}',
+                    'template' => '{add_activity} {view} {delete}',
+                    'buttons' => [
+                        'add_activity' => function ($url, $model) {
+                            return Html::a('<button class="btn btn-sm btn-success"><i class="fas fa-plus"></i></button>', $url, [
+                                'title' => 'Add Report Line',
+                            ]);
+                        },
+                    ],
                     'urlCreator' => function ($action, $model, $key, $index) {
                         if ($action === 'view') {
                             $url = Url::to(['/daily-report/view', 'id' => $model->t_daily_report_id, 'project_id' => $model->t_project_id]);
@@ -77,6 +84,10 @@ use yii\helpers\Url;
                         }
                         if ($action === 'delete') {
                             $url = Url::to(['/daily-report/delete', 'id' => $model->t_daily_report_id, 'project_id' => $model->t_project_id]);
+                            return $url;
+                        }
+                        if ($action === 'add_activity') {
+                            $url = Url::to(['/daily-report-line/create', 'report_id' => $model->t_daily_report_id, 'project_id' => $model->t_project_id]);
                             return $url;
                         }
                     }

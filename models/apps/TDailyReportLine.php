@@ -27,8 +27,8 @@ use Yii;
  *
  * @property TDailyReport $tDailyReport
  * @property TProject $tProject
- * @property YUser $createdBy
- * @property YUser $updatedBy
+ * @property User $createdBy
+ * @property User $updatedBy
  */
 class TDailyReportLine extends \yii\db\ActiveRecord
 {
@@ -43,10 +43,21 @@ class TDailyReportLine extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-            [['t_daily_report_id', 't_project_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
+            [['t_daily_report_id', 't_project_id', 'status'], 'required'],
             [['t_daily_report_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['qty_1', 'qty_2'], 'number'],
             [['labor_skill'], 'string', 'max' => 100],
@@ -54,8 +65,8 @@ class TDailyReportLine extends \yii\db\ActiveRecord
             [['uom_1', 'uom_2', 'uom_3', 'status'], 'string', 'max' => 10],
             [['t_daily_report_id'], 'exist', 'skipOnError' => true, 'targetClass' => TDailyReport::className(), 'targetAttribute' => ['t_daily_report_id' => 't_daily_report_id']],
             [['t_project_id'], 'exist', 'skipOnError' => true, 'targetClass' => TProject::className(), 'targetAttribute' => ['t_project_id' => 'm_project_id']],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => YUser::className(), 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => YUser::className(), 'targetAttribute' => ['updated_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -65,9 +76,9 @@ class TDailyReportLine extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            't_daily_report_line_id' => Yii::t('app', 'T Daily Report Line ID'),
-            't_daily_report_id' => Yii::t('app', 'T Daily Report ID'),
-            't_project_id' => Yii::t('app', 'T Project ID'),
+            't_daily_report_line_id' => Yii::t('app', 'Daily Report Line ID'),
+            't_daily_report_id' => Yii::t('app', 'Daily Report'),
+            't_project_id' => Yii::t('app', 'Project'),
             'labor_skill' => Yii::t('app', 'Labor Skill'),
             'activity' => Yii::t('app', 'Activity'),
             'material_type' => Yii::t('app', 'Material Type'),
@@ -112,7 +123,7 @@ class TDailyReportLine extends \yii\db\ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(YUser::className(), ['id' => 'created_by']);
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
     /**
@@ -122,6 +133,6 @@ class TDailyReportLine extends \yii\db\ActiveRecord
      */
     public function getUpdatedBy()
     {
-        return $this->hasOne(YUser::className(), ['id' => 'updated_by']);
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
 }

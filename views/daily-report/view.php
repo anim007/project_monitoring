@@ -3,6 +3,8 @@
 use app\components\ListComponent;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\apps\TDailyReport */
@@ -75,6 +77,40 @@ $this->params['breadcrumbs'][] = $this->title;
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="report-line">
+                    <hr/>
+                    <h3>Report Line</h3>
+                    <?= GridView::widget([
+                        'dataProvider' => $dataProviderLine,
+                        'tableOptions' => ['class' => 'table table-sm table-hover text-nowrap'],
+                        'filterModel' => $searchModelLine,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+
+                            // 't_daily_report_id',
+                            // 't_project_id',
+                            'activity',
+                            'labor_skill',
+                            'material_type',
+                            'tool_type',
+                            'qty_1',
+                            'qty_2',
+                            //'uom_1',
+                            //'uom_2',
+                            //'uom_3',
+                            'status',
+                            //'created_at',
+                            //'created_by',
+                            //'updated_at',
+                            //'updated_by',
+
+                            // [
+                            //     'class' => 'app\widgets\ActionColumn',
+                            //     'headerOptions' => ['width' => '100'],
+                            // ],
+                        ],
+                    ]); ?>
                 </div>
             </div>
         </div>

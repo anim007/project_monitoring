@@ -3,18 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\apps\TDailyReport;
-use app\models\apps\TProject;
+use app\models\apps\TDailyReportLine;
 use app\models\search\TDailyReportLineSearch;
-use app\models\search\TDailyReportSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DailyReportController implements the CRUD actions for TDailyReport model.
+ * DailyReportLineController implements the CRUD actions for TDailyReportLine model.
  */
-class DailyReportController extends Controller
+class DailyReportLineController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,12 +30,12 @@ class DailyReportController extends Controller
     }
 
     /**
-     * Lists all TDailyReport models.
+     * Lists all TDailyReportLine models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new TDailyReportSearch();
+        $searchModel = new TDailyReportLineSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,106 +45,90 @@ class DailyReportController extends Controller
     }
 
     /**
-     * Displays a single TDailyReport model.
+     * Displays a single TDailyReportLine model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $searchModelLine = new TDailyReportLineSearch();
-        $dataProviderLine = $searchModelLine->search(Yii::$app->request->queryParams);
-        $dataProviderLine->query->andWhere(['t_daily_report_id' => $id]);
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'searchModelLine' => $searchModelLine,
-            'dataProviderLine' => $dataProviderLine,
         ]);
     }
 
     /**
-     * Creates a new TDailyReport model.
+     * Creates a new TDailyReportLine model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($project_id = null)
+    public function actionCreate($report_id, $project_id)
     {
-        $model = new TDailyReport();
+        $model = new TDailyReportLine();
+        $model->t_daily_report_id = $report_id;
         $model->t_project_id = $project_id;
-        $project = TProject::findOne($project_id);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->uploadFile('file_path', 'file1') && $model->save()) {
-                Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
-                
-                if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-                return $this->redirect(['index']);
-            }
+            if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+
+            Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
             'model' => $model,
-            'project' => $project,
         ]);
     }
 
     /**
-     * Updates an existing TDailyReport model.
+     * Updates an existing TDailyReportLine model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id, $project_id = null)
+    public function actionUpdate($id, $project_id)
     {
         $model = $this->findModel($id);
-        $project = TProject::findOne($project_id);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-            if ($model->uploadFile('file_path', 'file1') && $model->save()) {
-                Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
-
-                if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
-                
-                return $this->redirect(['index']);
-            }
+            if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+            
+            Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'project' => $project,
         ]);
     }
 
     /**
-     * Deletes an existing TDailyReport model.
+     * Deletes an existing TDailyReportLine model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id, $project_id = null)
+    public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
-        if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the TDailyReport model based on its primary key value.
+     * Finds the TDailyReportLine model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return TDailyReport the loaded model
+     * @return TDailyReportLine the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = TDailyReport::findOne($id)) !== null) {
+        if (($model = TDailyReportLine::findOne($id)) !== null) {
             return $model;
         }
 
