@@ -13,11 +13,13 @@ use yii\helpers\Url;
 </div>
 
 <div class="laporan-index">
-    <?php echo $this->render('_search-laporan', ['model' => $searchModelLaporan, 'project_id' => $model->m_project_id]);
-    ?>
-    <hr class="mt-0"/>
 
     <?php \yii\widgets\Pjax::begin(); ?>
+    
+    <?php echo $this->render('_search-laporan', ['model' => $searchModelLaporan, 'project_id' => $model->m_project_id]);
+    ?>
+    <hr class="mt-0" />
+
     <div class="body table-responsive">
         <?= \yii\grid\GridView::widget([
             'dataProvider' => $dataProviderLaporan,
