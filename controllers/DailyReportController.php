@@ -71,6 +71,7 @@ class DailyReportController extends Controller
             'model' => $this->findModel($id),
             'searchModelLine' => $searchModelLine,
             'dataProviderLine' => $dataProviderLine,
+            'project' => TProject::findOne($this->findModel($id)->t_project_id),
         ]);
     }
 
@@ -111,6 +112,7 @@ class DailyReportController extends Controller
     public function actionUpdate($id, $project_id = null)
     {
         $model = $this->findModel($id);
+        $model->date = date('Y-m-d', strtotime($model->date));
         $project = TProject::findOne($project_id);
 
         if ($model->load(Yii::$app->request->post())) {

@@ -19,7 +19,7 @@ class TDailyReportLineSearch extends TDailyReportLine
         return [
             [['t_daily_report_line_id', 't_daily_report_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['labor_skill', 'activity', 'material_type', 'tool_type', 'uom_1', 'uom_2', 'uom_3', 'status'], 'safe'],
-            [['qty_1', 'qty_2'], 'number'],
+            [['qty_1', 'qty_2', 'volume'], 'number'],
         ];
     }
 

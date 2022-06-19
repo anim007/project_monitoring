@@ -5,12 +5,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\apps\TDailyReport */
 
 $this->title = 'Detail Daily Report ' . date('d M Y', strtotime($model->date));
-$this->params['breadcrumbs'][] = ['label' => 'List Daily Report', 'url' => ['/project/view', 'id' => $model->t_project_id]];
+$this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => ['/project/view', 'id' => $model->t_project_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row clearfix">
@@ -81,34 +82,57 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="report-line">
                     <hr/>
                     <h3>Report Line</h3>
+                    
+                    <div class="row mb-2">
+                        <div class="col-12">
+                            <?= Html::a('<i class="fas fa-plus"></i> Tambah Report Line', ['/daily-report-line/create', 'report_id' => $model->t_daily_report_id, 'project_id' => $model->t_project_id], ['class' => 'btn btn-success']) ?>
+                        </div>
+                    </div>
+
                     <?= GridView::widget([
                         'dataProvider' => $dataProviderLine,
                         'tableOptions' => ['class' => 'table table-sm table-hover text-nowrap'],
-                        'filterModel' => $searchModelLine,
+                        // 'filterModel' => $searchModelLine,
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
 
                             // 't_daily_report_id',
                             // 't_project_id',
-                            'activity',
                             'labor_skill',
-                            'material_type',
-                            'tool_type',
                             'qty_1',
                             'qty_2',
-                            //'uom_1',
-                            //'uom_2',
-                            //'uom_3',
+                            'activity',
+                            'volume',
+                            'uom_1',
+                            'material_type',
+                            'uom_2',
+                            'tool_type',
+                            'uom_3',
                             'status',
                             //'created_at',
                             //'created_by',
                             //'updated_at',
                             //'updated_by',
 
-                            // [
-                            //     'class' => 'app\widgets\ActionColumn',
-                            //     'headerOptions' => ['width' => '100'],
-                            // ],
+                            [
+                                'class' => 'app\widgets\ActionColumn',
+                                'headerOptions' => ['width' => '100'],
+                                // 'template' => '{view} {update}',
+                                'urlCreator' => function ($action, $dataProviderLine, $key, $index) {
+                                    if ($action === 'view') {
+                                        $url = Url::to(['/daily-report-line/view', 'id' => $dataProviderLine->t_daily_report_line_id]);
+                                        return $url;
+                                    }
+                                    if ($action === 'update') {
+                                        $url = Url::to(['/daily-report-line/update', 'id' => $dataProviderLine->t_daily_report_line_id, 'project_id' => $dataProviderLine->t_project_id]);
+                                        return $url;
+                                    }
+                                    if ($action === 'delete') {
+                                        $url = Url::to(['/daily-report-line/delete', 'id' => $dataProviderLine->t_daily_report_line_id]);
+                                        return $url;
+                                    }
+                                }
+                            ],
                         ],
                     ]); ?>
                 </div>
