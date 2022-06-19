@@ -25,37 +25,47 @@ use yii\bootstrap4\ActiveForm;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12 col-md-6">
+                        <div class="col-sm-12 col-md-8">
                             <?= $form->field($model, 'labor_skill')->textInput(['maxlength' => true]) ?>
-                            <?= $form->field($model, 'material_type')->textInput(['maxlength' => true]) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-2">
                             <?= $form->field($model, 'qty_1')->textInput() ?>
                         </div>
-                        <div class="col-sm-12 col-md-6">
-                            <?= $form->field($model, 'activity')->textInput(['maxlength' => true]) ?>
-                            <?= $form->field($model, 'tool_type')->textInput(['maxlength' => true]) ?>
+                        <div class="col-sm-12 col-md-2">
                             <?= $form->field($model, 'qty_2')->textInput() ?>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-4">
+                        <div class="col-sm-12 col-md-12">
+                            <?= $form->field($model, 'activity')->textInput(['maxlength' => true]) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <?= $form->field($model, 'volume')->textInput() ?>
+                        </div>
+                        <div class="col-sm-12 col-md-1">
                             <?= $form->field($model, 'uom_1')->textInput(['maxlength' => true]) ?>
                         </div>
-                        <div class="col-sm-12 col-md-4">
+                        <div class="col-sm-12 col-md-3">
+                            <?= $form->field($model, 'material_type')->textInput(['maxlength' => true]) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-1">
                             <?= $form->field($model, 'uom_2')->textInput(['maxlength' => true]) ?>
                         </div>
-                        <div class="col-sm-12 col-md-4">
+                        <div class="col-sm-12 col-md-3">
+                            <?= $form->field($model, 'tool_type')->textInput(['maxlength' => true]) ?>
+                        </div>  
+                        <div class="col-sm-12 col-md-1">
                             <?= $form->field($model, 'uom_3')->textInput(['maxlength' => true]) ?>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <?= $form->field($model, 'status')->dropdownList(ListComponent::getListDataStatus()) ?>
+                        <div class="col-sm-12 col-md-4">
+                            <!-- <?= $form->field($model, 'status')->dropdownList(ListComponent::getListDataStatus()) ?> -->
+                            <?= $form->field($model, 'status')->checkbox() ?>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="form-actions text-right">
-                        <?= Html::submitButton('<i class="fas fa-save"></i> Simpan', ['class' => 'btn btn-success']) ?>
+                        <?= Html::submitButton('<i class="fas fa-save"></i> Simpan & Kembali', ['class' => 'btn btn-warning']) ?>
+
+                        <?= Html::submitButton('<i class="fas fa-plus-square"></i> Simpan & Tambah', ['class' => 'btn btn-success']) ?>
                     </div>
                 </div>
                 <?php ActiveForm::end(); ?>

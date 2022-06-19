@@ -12,6 +12,7 @@ use Yii;
  * @property int $t_project_id
  * @property string|null $labor_skill
  * @property string|null $activity
+ * @property float|null $volume
  * @property string|null $material_type
  * @property string|null $tool_type
  * @property float|null $qty_1
@@ -59,7 +60,7 @@ class TDailyReportLine extends \yii\db\ActiveRecord
         return [
             [['t_daily_report_id', 't_project_id', 'status'], 'required'],
             [['t_daily_report_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['qty_1', 'qty_2'], 'number'],
+            [['qty_1', 'qty_2', 'volume'], 'number'],
             [['labor_skill'], 'string', 'max' => 100],
             [['activity', 'material_type', 'tool_type'], 'string', 'max' => 255],
             [['uom_1', 'uom_2', 'uom_3', 'status'], 'string', 'max' => 10],
@@ -81,6 +82,7 @@ class TDailyReportLine extends \yii\db\ActiveRecord
             't_project_id' => Yii::t('app', 'Project'),
             'labor_skill' => Yii::t('app', 'Labor Skill'),
             'activity' => Yii::t('app', 'Activity'),
+            'volume' => Yii::t('app', 'Volume'),
             'material_type' => Yii::t('app', 'Material Type'),
             'tool_type' => Yii::t('app', 'Tool Type'),
             'qty_1' => Yii::t('app', 'Qty 1'),

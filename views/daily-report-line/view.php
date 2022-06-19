@@ -6,15 +6,15 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\apps\TDailyReportLine */
 
-$this->title = 'Detail T Daily Report Line ' . $model->t_daily_report_line_id;
-$this->params['breadcrumbs'][] = ['label' => 'List T Daily Report Line', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Detail Daily Report Line ' . $model->labor_skill;
+$this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => ['/daily-report/view?id='.$model->t_daily_report_id, 'project_id' => $model->t_project_id]];
+$this->params['breadcrumbs'][] = $model->labor_skill;
 ?>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="card-header">
-                <?= Html::a('<i class="fas fa-pencil-alt"></i> Update', ['update', 'id' => $model->t_daily_report_line_id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('<i class="fas fa-pencil-alt"></i> Update', ['update', 'id' => $model->t_daily_report_line_id, 'project_id' => $model->t_project_id], ['class' => 'btn btn-primary']) ?>
                 <?= Html::a('<i class="far fa-trash-alt"></i> Delete', ['delete', 'id' => $model->t_daily_report_line_id], [
                     'class' => 'btn btn-danger',
                     'data' => [
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'options' => ['class' => 'table table-sm table-striped table-bordered detail-view'],
                             'model' => $model,
                             'attributes' => [
-                                't_daily_report_line_id',
+                                // 't_daily_report_line_id',
                                 't_daily_report_id',
                                 't_project_id',
                                 'labor_skill',

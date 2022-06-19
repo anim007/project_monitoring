@@ -28,6 +28,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'activity') ?>
 
+    <?php // echo $form->field($model, 'volume') ?>
+
     <?php // echo $form->field($model, 'material_type') ?>
 
     <?php // echo $form->field($model, 'tool_type') ?>
