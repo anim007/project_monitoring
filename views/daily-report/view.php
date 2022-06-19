@@ -12,7 +12,7 @@ use yii\helpers\Url;
 
 $this->title = 'Detail Daily Report ' . date('d M Y', strtotime($model->date));
 $this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => ['/project/view', 'id' => $model->t_project_id]];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = date('d M Y', strtotime($model->date));
 ?>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
