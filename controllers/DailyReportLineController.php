@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\apps\TDailyReportLine;
+use app\models\apps\TDailyReport;
 use app\models\apps\TProject;
 use app\models\search\TDailyReportLineSearch;
 use yii\web\Controller;
@@ -63,10 +64,12 @@ class DailyReportLineController extends Controller
     public function actionView($id)
     {
         $project = TProject::findOne($this->findModel($id)->t_project_id);
+        $dailyreport = TDailyReport::findOne($this->findModel($id));
 
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'project' => $project
+            'project' => $project,
+            'dailyreport' => $dailyreport
         ]);
     }
 
@@ -83,6 +86,7 @@ class DailyReportLineController extends Controller
         $model->status = 1;
 
         $project = TProject::findOne($project_id);
+        $dailyreport = TDailyReport::findOne($report_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -97,7 +101,8 @@ class DailyReportLineController extends Controller
 
         return $this->render('create', [
             'model' => $model,
-            'project' => $project
+            'project' => $project,
+            'dailyreport' => $dailyreport
         ]);
     }
 
@@ -113,6 +118,7 @@ class DailyReportLineController extends Controller
         $model = $this->findModel($id);
 
         $project = TProject::findOne($project_id);
+        $dailyreport = TDailyReport::findOne($this->findModel($id));
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -129,7 +135,8 @@ class DailyReportLineController extends Controller
 
         return $this->render('update', [
             'model' => $model,
-            'project' => $project
+            'project' => $project,
+            'dailyreport' => $dailyreport
         ]);
     }
 
