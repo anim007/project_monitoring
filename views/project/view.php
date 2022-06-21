@@ -15,7 +15,7 @@ $tabs = [
     1 => 'Perencanaan',
     2 => 'Realisasi',
     3 => 'Laporan',
-    // 4 => 'Dokumentasi'
+    4 => 'Dokumentasi'
 ];
 
 ?>
@@ -56,6 +56,8 @@ $tabs = [
                                         'dataProviderRealisasi' => $dataProviderRealisasi,
                                         'searchModelLaporan' => $searchModelLaporan,
                                         'dataProviderLaporan' => $dataProviderLaporan,
+                                        'searchModelDoc' => $searchModelDoc,
+                                        'dataProviderDoc' => $dataProviderDoc,
                                     ]) ?>
                                 </div>
                             <?php endforeach; ?>

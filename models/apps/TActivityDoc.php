@@ -20,11 +20,14 @@ use Yii;
  *
  * @property TActivity $tActivity
  * @property TProject $tProject
- * @property YUser $createdBy
- * @property YUser $updatedBy
+ * @property User $createdBy
+ * @property User $updatedBy
  */
 class TActivityDoc extends \yii\db\ActiveRecord
 {
+
+    public $file1;
+
     /**
      * {@inheritdoc}
      */
@@ -36,17 +39,29 @@ class TActivityDoc extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-            [['t_activity_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'required'],
+            [['t_activity_id', 't_project_id'], 'required'],
             [['t_activity_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['file_path', 'description'], 'string'],
             [['date'], 'safe'],
+            [['file1'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, jpeg'],
             [['t_activity_id'], 'exist', 'skipOnError' => true, 'targetClass' => TActivity::className(), 'targetAttribute' => ['t_activity_id' => 't_activity_id']],
             [['t_project_id'], 'exist', 'skipOnError' => true, 'targetClass' => TProject::className(), 'targetAttribute' => ['t_project_id' => 'm_project_id']],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => YUser::className(), 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => YUser::className(), 'targetAttribute' => ['updated_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -56,10 +71,11 @@ class TActivityDoc extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            't_activity_doc_id' => Yii::t('app', 'T Activity Doc ID'),
-            't_activity_id' => Yii::t('app', 'T Activity ID'),
-            't_project_id' => Yii::t('app', 'T Project ID'),
-            'file_path' => Yii::t('app', 'File Path'),
+            't_activity_doc_id' => Yii::t('app', 'Activity Doc ID'),
+            't_activity_id' => Yii::t('app', 'Activity'),
+            't_project_id' => Yii::t('app', 'Project'),
+            'file_path' => Yii::t('app', 'Attachment'),
+            'file1' => Yii::t('app', 'Attachment'),
             'description' => Yii::t('app', 'Description'),
             'date' => Yii::t('app', 'Date'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -96,7 +112,7 @@ class TActivityDoc extends \yii\db\ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(YUser::className(), ['id' => 'created_by']);
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
     /**
@@ -106,6 +122,40 @@ class TActivityDoc extends \yii\db\ActiveRecord
      */
     public function getUpdatedBy()
     {
-        return $this->hasOne(YUser::className(), ['id' => 'updated_by']);
+        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * Upload file.
+     *
+     * @return true/false
+     */
+    public function uploadFile($field, $attr)
+    {
+        $path       = null;
+        $model      = $this;
+        $old_url    = $model[$field];
+
+        $model[$attr] = \yii\web\UploadedFile::getInstance($model, $attr);
+
+        if (is_null($model[$attr])) {
+            return true;
+        }
+
+        if (!is_null($model[$attr])) {
+            $path = 'files/images/dokumentasi/'  . 'att_' . date('YmdHis') . '_' . $model[$attr]->name;
+            $model[$attr]->saveAs($path);
+            if ($old_url != null && !empty($old_url)) {
+                $old_url = Yii::$app->basePath . '/web/' . $old_url;
+                if (is_dir($old_url)) unlink($old_url);
+            }
+            $model[$attr] = '';
+            $model[$field] = $path;
+            return true;
+        } else {
+            return false;
+        }
+
+        return false;
     }
 }

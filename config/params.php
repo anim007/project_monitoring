@@ -1,6 +1,6 @@
 <?php
 
-$cardOptions = "card-outline card-danger";
+$cardOptions = "card-outline card-primary";
 
 return [
     'adminEmail' => 'admin@example.com',

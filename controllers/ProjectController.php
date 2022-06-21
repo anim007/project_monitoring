@@ -2,8 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\apps\TActivityDoc;
 use Yii;
 use app\models\apps\TProject;
+use app\models\search\TActivityDocSearch;
 use app\models\search\TActivityRealisasiSearch;
 use app\models\search\TActivitySearch;
 use app\models\search\TDailyReportSearch;
@@ -79,6 +81,10 @@ class ProjectController extends Controller
         $dataProviderLaporan = $searchModelLaporan->search(Yii::$app->request->queryParams);
         $dataProviderLaporan->query->andWhere(['t_project_id' => $id]);
 
+        $searchModelDoc = new TActivityDocSearch();
+        $dataProviderDoc = $searchModelDoc->search(Yii::$app->request->queryParams);
+        $dataProviderDoc->query->andWhere(['t_project_id' => $id]);
+
         return $this->render('view', [
             'model' => $model,
             'searchModelPerencanaan' => $searchModelPerencanaan,
@@ -87,6 +93,8 @@ class ProjectController extends Controller
             'dataProviderRealisasi' => $dataProviderRealisasi,
             'searchModelLaporan' => $searchModelLaporan,
             'dataProviderLaporan' => $dataProviderLaporan,
+            'searchModelDoc' => $searchModelDoc,
+            'dataProviderDoc' => $dataProviderDoc,
         ]);
     }
 

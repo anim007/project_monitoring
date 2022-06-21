@@ -3,6 +3,7 @@
 namespace app\components;
 
 use app\models\apps\MBpartner;
+use app\models\apps\TActivity;
 use app\models\apps\TProject;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -63,6 +64,18 @@ class ListComponent extends \yii\base\Component
         if (!is_null($status)) $datas = $datas->andWhere(['status' => $status]);
         $datas = $datas->all();
         $listData = ArrayHelper::map($datas, 'm_project_id', 'name');
+
+        return $listData;
+    }
+
+    public static function getListActivity($status = null, $project_id = null)
+    {
+        $datas = TActivity::find();
+        if (!is_null($status)) $datas = $datas->andWhere(['status' => $status]);
+        if (!is_null($project_id)) $datas = $datas->andWhere(['t_project_id' => $project_id]);
+
+        $datas = $datas->all();
+        $listData = ArrayHelper::map($datas, 't_activity_id', 'name');
 
         return $listData;
     }
