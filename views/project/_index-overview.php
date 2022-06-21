@@ -29,7 +29,9 @@ $listVendor = ListComponent::getListBPartner('vendor');
                     ],
                     [
                         'label' => 'Progress',
-                        'value' => '0%'
+                        'value' => function ($model) {
+                            return $model->getProgress() . ' %';
+                        }
                     ],
                 ],
             ]) ?>

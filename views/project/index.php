@@ -53,6 +53,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                         return ListComponent::getListProjectStatus()[$model->status];
                                     }
                                 ],
+                                [
+                                    'label' => 'Progress',
+                                    'format' => 'raw',
+                                    'value' => function($model) {
+                                        $progress = $model->getProgress();
+                                        return '<div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: '.$progress.'%;" aria-valuenow="'.$progress.'" aria-valuemin="0" aria-valuemax="100">'.$progress.'%</div>
+                                        </div>';
+                                    }
+                                ],
                                 //'created_at',
                                 //'created_by',
                                 //'updated_at',

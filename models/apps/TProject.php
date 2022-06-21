@@ -188,4 +188,21 @@ class TProject extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'updated_by']);
     }
+
+
+    /**
+     * Calculate progress
+     * 
+     * @return int
+     */
+    public function getProgress()
+    {
+        $activities = TActivity::find()
+            ->where(['t_project_id' => $this->m_project_id])
+            ->andWhere(['NOT', ['finish_date' => NULL]]);
+        $totProgress = $activities->sum('heaviness');
+        $totProgress = is_null($totProgress) ? 0 : $totProgress;
+
+        return $totProgress;
+    }
 }
