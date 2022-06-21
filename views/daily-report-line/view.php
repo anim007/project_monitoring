@@ -1,5 +1,6 @@
 <?php
 
+use app\components\ListComponent;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -32,8 +33,8 @@ $this->params['breadcrumbs'][] = $model->labor_skill;
                             'model' => $model,
                             'attributes' => [
                                 // 't_daily_report_line_id',
-                                't_daily_report_id',
-                                't_project_id',
+                                // 't_daily_report_id',
+                                'tProject.name:text:Project',
                                 'labor_skill',
                                 'activity',
                                 'material_type',
@@ -43,11 +44,16 @@ $this->params['breadcrumbs'][] = $model->labor_skill;
                                 'uom_1',
                                 'uom_2',
                                 'uom_3',
-                                'status',
+                                [
+                                    'label' => 'Status',
+                                    'value' => function ($model) {
+                                        return ListComponent::getListDataStatus()[$model->status];
+                                    }
+                                ],
                                 'created_at:datetime',
-                                'created_by',
+                                'createdBy.username:text:Created By',
                                 'updated_at:datetime',
-                                'updated_by',
+                                'updatedBy.username:text:Updated By',
                             ],
                         ]) ?>
                     </div>

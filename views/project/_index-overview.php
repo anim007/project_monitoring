@@ -11,6 +11,13 @@ $listPIC = ListComponent::getListBPartner('employee');
 $listVendor = ListComponent::getListBPartner('vendor');
 ?>
 <div class="row">
+    <div class="col-12">
+        <div class="progress mb-4" style="height: 30px;">
+            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: <?= $model->getProgress(); ?>%;" aria-valuenow="<?= $model->getProgress(); ?>" aria-valuemin="0" aria-valuemax="100">
+                Project Progress : <?= $model->getProgress(); ?> %
+            </div>
+        </div>
+    </div>
     <div class="col-sm-12 col-md-6">
         <div class="body table-responsive">
             <?= DetailView::widget([
@@ -25,12 +32,6 @@ $listVendor = ListComponent::getListBPartner('vendor');
                         'label' => 'Status',
                         'value' => function ($model) {
                             return \app\components\ListComponent::getListProjectStatus()[$model->status];
-                        }
-                    ],
-                    [
-                        'label' => 'Progress',
-                        'value' => function ($model) {
-                            return $model->getProgress() . ' %';
                         }
                     ],
                 ],
