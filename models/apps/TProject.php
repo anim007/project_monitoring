@@ -197,11 +197,25 @@ class TProject extends \yii\db\ActiveRecord
      */
     public function getProgress()
     {
-        $activities = TActivity::find()
+        // $activities = TActivity::find()
+        //     ->where(['t_project_id' => $this->m_project_id])
+        //     ->andWhere(['NOT', ['finish_date' => NULL]]);
+        // $totProgress = $activities->sum('heaviness');
+        // $totProgress = is_null($totProgress) ? 0 : $totProgress;
+
+        // return $totProgress;
+
+
+        $activitiesFinish = TActivity::find()
             ->where(['t_project_id' => $this->m_project_id])
             ->andWhere(['NOT', ['finish_date' => NULL]]);
-        $totProgress = $activities->sum('heaviness');
-        $totProgress = is_null($totProgress) ? 0 : $totProgress;
+        $finish = $activitiesFinish->sum('heaviness');
+
+        $activitiesTotal = TActivity::find()
+            ->where(['t_project_id' => $this->m_project_id]);
+        $total = $activitiesTotal->sum('heaviness');
+
+        $totProgress = is_null($finish) ? 0 : round($finish / $total * 100, 0);
 
         return $totProgress;
     }
