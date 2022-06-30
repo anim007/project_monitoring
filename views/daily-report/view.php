@@ -108,7 +108,20 @@ $this->params['breadcrumbs'][] = date('d M Y', strtotime($model->date));
                             'uom_2',
                             'tool_type',
                             'uom_3',
-                            'status',
+                            [
+                                'attribute' => 'status',
+                                'format' => 'html',
+                                'value' => function ($model) {
+                                    $status = ListComponent::getListDataStatus()[$model->status];
+                                    $res = '';
+                                    if ($model->status == 0) {
+                                        $res = '<span class="badge badge-danger">' . $status . '</span>';
+                                    } else {
+                                        $res = '<span class="badge badge-success">' . $status . '</span>';
+                                    }
+                                    return $res;
+                                }
+                            ],
                             //'created_at',
                             //'created_by',
                             //'updated_at',

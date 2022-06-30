@@ -58,7 +58,7 @@ class TDailyReportLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['t_daily_report_id', 't_project_id', 'status'], 'required'],
+            [['t_daily_report_id', 't_project_id', 'status', 'labor_skill'], 'required'],
             [['t_daily_report_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['qty_1', 'qty_2', 'volume'], 'number'],
             [['labor_skill'], 'string', 'max' => 100],
