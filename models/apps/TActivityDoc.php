@@ -53,7 +53,7 @@ class TActivityDoc extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['t_activity_id', 't_project_id'], 'required'],
+            [['t_activity_id', 't_project_id', 'description', 'file_path', 'date'], 'required'],
             [['t_activity_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['file_path', 'description'], 'string'],
             [['date'], 'safe'],

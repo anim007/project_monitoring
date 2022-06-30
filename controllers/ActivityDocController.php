@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\apps\TActivityDoc;
+use app\models\apps\TProject;
+use app\models\apps\TActivity;
 use app\models\search\TActivityDocSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -52,8 +54,12 @@ class ActivityDocController extends Controller
      */
     public function actionView($id, $project_id = null)
     {
+        $project = TProject::findOne($project_id);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'project' => $project,
+            'activity' => TActivity::findOne($this->findModel($id)->t_activity_id)
         ]);
     }
 
@@ -66,6 +72,7 @@ class ActivityDocController extends Controller
     {
         $model = new TActivityDoc();
         $model->t_project_id = $project_id;
+        $project = TProject::findOne($project_id);
 
         if ($model->load(Yii::$app->request->post())) {
             if ($model->uploadFile('file_path', 'file1') && $model->save()) {
@@ -79,6 +86,7 @@ class ActivityDocController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'project' => $project,
         ]);
     }
 
@@ -92,6 +100,7 @@ class ActivityDocController extends Controller
     public function actionUpdate($id, $project_id = null)
     {
         $model = $this->findModel($id);
+        $project = TProject::findOne($project_id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
@@ -103,6 +112,8 @@ class ActivityDocController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'project' => $project,
+            'activity' => TActivity::findOne($this->findModel($id)->t_activity_id)
         ]);
     }
 
@@ -117,6 +128,8 @@ class ActivityDocController extends Controller
     {
         $this->findModel($id)->delete();
 
+        if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+        
         return $this->redirect(['index']);
     }
 

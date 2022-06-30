@@ -8,16 +8,16 @@ use yii\widgets\DetailView;
 
 $url = ['/project/view', 'id' => $model->t_project_id];
 
-$this->title = 'Detail Dokumentasi ' . $model->t_activity_doc_id;
-$this->params['breadcrumbs'][] = ['label' => 'List Dokumentasi', 'url' => $url];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = 'Detail Dokumentasi : ' . $activity->name;
+$this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => $url];
+$this->params['breadcrumbs'][] = $activity->name;
 ?>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
             <div class="card-header">
-                <?= Html::a('<i class="fas fa-pencil-alt"></i> Update', ['update', 'id' => $model->t_activity_doc_id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('<i class="far fa-trash-alt"></i> Delete', ['delete', 'id' => $model->t_activity_doc_id], [
+                <?= Html::a('<i class="fas fa-pencil-alt"></i> Update', ['update', 'id' => $model->t_activity_doc_id, 'project_id' => $model->t_project_id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('<i class="far fa-trash-alt"></i> Delete', ['delete', 'id' => $model->t_activity_doc_id, 'project_id' => $model->t_project_id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => 'Are you sure you want to delete this item?',

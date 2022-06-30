@@ -7,9 +7,8 @@ use yii\helpers\Html;
 
 $url = ['/project/view', 'id' => $model->t_project_id];
 
-$this->title = 'Update Dokumentasi: ' . $model->t_activity_doc_id;
-$this->params['breadcrumbs'][] = ['label' => 'List Dokumentasi', 'url' => $url];
-$this->params['breadcrumbs'][] = ['label' => $model->t_activity_doc_id, 'url' => ['view', 'id' => $model->t_activity_doc_id]];
+$this->title = 'Update Dokumentasi : ' . $activity->name;
+$this->params['breadcrumbs'][] = ['label' => $project->name . ' / ' . $activity->name, 'url' => $url];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="tactivity-doc-update">
