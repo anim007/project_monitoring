@@ -78,6 +78,7 @@ class ActivityController extends Controller
         $model = new TActivity();
         $model->t_project_id = $project_id;
         $project = TProject::findOne($project_id);
+        $heaviness = TActivity::find()->where(['t_project_id' => $project_id])->sum('heaviness');
 
         if ($model->load(Yii::$app->request->post())) {
             if(Yii::$app->request->post()['TActivity']['status'] != 'finish') $model->finish_date = null;
@@ -94,6 +95,7 @@ class ActivityController extends Controller
         return $this->render('create', [
             'model' => $model,
             'project' => $project,
+            'heaviness' => $heaviness
         ]);
     }
 
@@ -108,6 +110,10 @@ class ActivityController extends Controller
     {
         $model = $this->findModel($id);
         $project = TProject::findOne($project_id);
+        $heaviness = TActivity::find()
+            ->where(['t_project_id' => $project_id])
+            ->andWhere(['<>', 't_activity_id', $id])
+            ->sum('heaviness');
 
         $model->start_date = date('Y-m-d', strtotime($model->start_date));
         $model->est_finish_date = date('Y-m-d', strtotime($model->est_finish_date));
@@ -128,6 +134,7 @@ class ActivityController extends Controller
         return $this->render('update', [
             'model' => $model,
             'project' => $project,
+            'heaviness' => $heaviness
         ]);
     }
 

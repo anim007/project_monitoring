@@ -30,7 +30,7 @@ use yii\bootstrap4\ActiveForm;
                             <?= $form->field($model, 'type')->dropdownList(ListComponent::getListActivityType()) ?>
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <?= $form->field($model, 'heaviness')->textInput() ?>
+                            <?= $form->field($model, 'heaviness')->textInput(['type' => 'number', 'max' => (100 - $heaviness), 'min' => 0]) ?>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'status')->dropdownList(ListComponent::getListActivityStatus()) ?>
