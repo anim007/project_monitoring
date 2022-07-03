@@ -11,6 +11,8 @@ use app\models\apps\TActivityDoc;
  */
 class TActivityDocSearch extends TActivityDoc
 {
+    public $date1, $date2;
+
     /**
      * {@inheritdoc}
      */
@@ -18,7 +20,7 @@ class TActivityDocSearch extends TActivityDoc
     {
         return [
             [['t_activity_doc_id', 't_activity_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['file_path', 'description', 'date'], 'safe'],
+            [['file_path', 'description', 'date', 'date1', 'date2'], 'safe'],
         ];
     }
 
@@ -70,6 +72,10 @@ class TActivityDocSearch extends TActivityDoc
 
         $query->andFilterWhere(['like', 'file_path', $this->file_path])
             ->andFilterWhere(['like', 'description', $this->description]);
+
+        if (!is_null($this->date1) && !is_null($this->date2) && !empty($this->date1) && !empty($this->date2)) {
+            $query->andFilterWhere(['between', 'date(date)', date('Y-m-d', strtotime($this->date1)), date('Y-m-d', strtotime($this->date2))]);
+        }
 
         return $dataProvider;
     }

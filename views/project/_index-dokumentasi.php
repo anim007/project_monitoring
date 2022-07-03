@@ -16,8 +16,7 @@ use yii\helpers\Url;
 
     <?php \yii\widgets\Pjax::begin(); ?>
     
-    <?php //echo $this->render('_search-laporan-doc', ['model' => $searchModelDoc, 'project_id' => $model->m_project_id]);
-    ?>
+    <?php echo $this->render('_search-dokumentasi', ['model' => $searchModelDoc, 'pid' => $model->m_project_id]); ?>
     <hr class="mt-0" />
 
     <div class="body table-responsive">
@@ -28,12 +27,12 @@ use yii\helpers\Url;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                [
-                    'attribute' => 't_project_id',
-                    'value' => function ($model) {
-                        return $model->tProject->name;
-                    }
-                ],
+                // [
+                //     'attribute' => 't_project_id',
+                //     'value' => function ($model) {
+                //         return $model->tProject->name;
+                //     }
+                // ],
                 'date:date',
                 // 'file_path:ntext',
                 'description:ntext',
