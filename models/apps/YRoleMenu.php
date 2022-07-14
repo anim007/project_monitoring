@@ -12,6 +12,7 @@ use Yii;
  * @property int $y_menu_id
  * @property int $is_default
  * @property int $is_tampil
+ * @property int $is_readonly
  *
  * @property YRole $yRole
  * @property YMenu $yMenu
@@ -33,7 +34,7 @@ class YRoleMenu extends \yii\db\ActiveRecord
     {
         return [
             [['y_role_id', 'y_menu_id'], 'required'],
-            [['y_role_id', 'y_menu_id', 'is_default', 'is_tampil'], 'integer'],
+            [['y_role_id', 'y_menu_id', 'is_default', 'is_tampil', 'is_readonly'], 'integer'],
             [['y_role_id'], 'exist', 'skipOnError' => true, 'targetClass' => YRole::className(), 'targetAttribute' => ['y_role_id' => 'y_role_id']],
             [['y_menu_id'], 'exist', 'skipOnError' => true, 'targetClass' => YMenu::className(), 'targetAttribute' => ['y_menu_id' => 'id']],
         ];
@@ -50,6 +51,7 @@ class YRoleMenu extends \yii\db\ActiveRecord
             'y_menu_id' => Yii::t('app', 'Menu'),
             'is_default' => Yii::t('app', 'Is Default'),
             'is_tampil' => Yii::t('app', 'Is Tampil'),
+            'is_readonly' => Yii::t('app', 'Is Read Only'),
         ];
     }
 

@@ -69,23 +69,23 @@ $config = [
     'params' => $params,
     'on beforeAction' => function ($event) {
         $user = Yii::$app->user;
-        $excepController = ['user', 'cetakan', 'ajax', 'user-guide'];
+        $excepController = ['site', 'user', 'ajax'];
         $excepAction = ['change-password', 'profile'];
 
         if (!$user->isGuest && !in_array(0, $user->identity->yRoleIDs)) {
             $hasAccess = false;
-            $contoller = $event->action->controller->id;
+            $controller = $event->action->controller->id;
 
-            if (in_array($contoller, $excepController)) {
+            if (in_array($controller, $excepController)) {
                 $hasAccess = true;
-                if ($contoller == 'user' && !in_array($event->action->id, $excepAction)) {
+                if ($controller == 'user' && !in_array($event->action->id, $excepAction)) {
                     $hasAccess = false;
                 }
             }
 
             $roleMenus = \app\models\apps\YRoleMenu::find()->where(['in', 'y_role_id', $user->identity->yRoleIDs])->orderBy('y_menu_id')->all();
             foreach ($roleMenus as $k => $v) {
-                if (strpos($v->yMenu->attributes['url'], $contoller) !== false) {
+                if (strpos($v->yMenu->attributes['url'], $controller) !== false) {
                     $hasAccess = true;
                 }
             }

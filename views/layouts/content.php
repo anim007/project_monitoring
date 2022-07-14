@@ -2,6 +2,24 @@
 /* @var $content string */
 
 use yii\bootstrap4\Breadcrumbs;
+
+// echo '<pre>';var_dump(isset(Yii::$app->controller->action->actionMethod)); echo '</pre>';  die();
+
+$controller = Yii::$app->controller->id;
+$cont       = '"' . $controller . '"';
+$action     = '"' . (isset(Yii::$app->controller->action->actionMethod) ? Yii::$app->controller->action->actionMethod : null) . '"';
+$user       = Yii::$app->user;
+$isGuest    = $user->isGuest;
+$readOnly   = 0;
+$curRole    = '';
+$roleMenus  = $isGuest ? '' : \app\models\apps\YRoleMenu::find()->where(['in', 'y_role_id', $user->identity->yRoleIDs])->orderBy('y_menu_id')->all();
+foreach ($roleMenus as $k => $v) {
+    $curRole = '"' . $v->yRole->nama . '"';
+    if (strpos($v->yMenu->attributes['url'], $controller) !== false) {
+        $readOnly = $v->is_readonly;
+    }
+}
+
 ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -48,6 +66,19 @@ $js=<<< JS
     setTimeout(() => {
         $(".toasts-top-right").remove(); 
     }, 3000);
+
+    let btnAdd = $(".fa-plus");
+    let btnEdit = $(".fa-pencil-alt");
+    let btnDelete = $(".fa-trash-alt");
+    if ($readOnly == 1) {
+        btnAdd.parent().hide();
+        btnEdit.parent().hide();
+        btnDelete.parent().hide();
+
+        if ($cont === "project" && $action === "actionIndex" && $curRole === "Admin")
+            btnAdd.parent().show();
+    }
+    // console.log();
 JS;
 
 $this->registerJs($js, yii\web\View::POS_READY);

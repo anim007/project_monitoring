@@ -49,8 +49,12 @@ class ProjectController extends Controller
      */
     public function actionIndex()
     {
+        $user           = Yii::$app->user;
+        $isPelaksana    = $user->isGuest ? false : array_search('Pelaksana', $user->identity->roles);
+        
         $searchModel = new TProjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if ($isPelaksana !== false) $dataProvider->query->andWhere(['created_by' => $user->identity->id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

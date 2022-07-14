@@ -260,4 +260,13 @@ class User extends ActiveRecord implements IdentityInterface
             $ids[] = $role->y_user_role_id;
         return $ids;
     }
+
+    public function getRoles() {
+        $datas = [];
+        foreach ($this->yUserRoles as $k => $v) {
+            $datas[$k] = $v->yRole->nama;
+        } 
+
+        return $datas;
+    }
 }

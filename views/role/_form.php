@@ -62,6 +62,11 @@ use kartik\select2\Select2;
                                     'items' => [1 => 'Iya', 0 => 'Tidak'],
                                     'headerOptions' => ['width' => '10%'],
                                 ],
+                                [
+                                    'attribute' => 'is_readonly',
+                                    'items' => [0 => 'Tidak', 1 => 'Iya'],
+                                    'headerOptions' => ['width' => '10%'],
+                                ],
                                 ['class' => 'app\widgets\ButtonColumn']
                             ],
                             'hiddens' => [
