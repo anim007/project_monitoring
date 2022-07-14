@@ -57,7 +57,7 @@ class TActivityDoc extends \yii\db\ActiveRecord
             [['t_activity_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['file_path', 'description'], 'string'],
             [['date'], 'safe'],
-            [['file1'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, jpeg'],
+            [['file1'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, jpeg, mp4, mpg, mkv, wmv, avi'],
             [['t_activity_id'], 'exist', 'skipOnError' => true, 'targetClass' => TActivity::className(), 'targetAttribute' => ['t_activity_id' => 't_activity_id']],
             [['t_project_id'], 'exist', 'skipOnError' => true, 'targetClass' => TProject::className(), 'targetAttribute' => ['t_project_id' => 'm_project_id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -157,5 +157,23 @@ class TActivityDoc extends \yii\db\ActiveRecord
         }
 
         return false;
+    }
+
+    public function isVideo()
+    {
+        $video = ['mp4', 'mpg', 'mkv', 'wmv', 'avi'];
+        $format = is_null($this->file_path) ? null : substr($this->file_path, -3, 3);
+        $bool = array_search($format, $video) !== false ? true : false;
+
+        return $bool;
+    }
+
+    public function isImage()
+    {
+        $video = ['jpg', 'png', 'jpeg'];
+        $format = is_null($this->file_path) ? null : substr($this->file_path, -3, 3);
+        $bool = array_search($format, $video) !== false ? true : false;
+
+        return $bool;
     }
 }

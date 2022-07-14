@@ -11,6 +11,7 @@ $url = ['/project/view', 'id' => $model->t_project_id];
 $this->title = 'Detail Dokumentasi : ' . $activity->name;
 $this->params['breadcrumbs'][] = ['label' => $project->name, 'url' => $url];
 $this->params['breadcrumbs'][] = $activity->name;
+
 ?>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -49,7 +50,18 @@ $this->params['breadcrumbs'][] = $activity->name;
                         </div>
                         <div class="col-sm-12 col-md-7">
                             <div class="col-sm-12 col-md-8">
-                                <img src="<?= Yii::getAlias('@web/') . $model->file_path ?>" alt="image" class="img-thumbnail" width="100%">
+                                <?php if ($model->isImage()) : ?>
+                                    <img src="<?= Yii::getAlias('@web/') . $model->file_path ?>" alt="image" class="img-thumbnail" width="100%">
+                                <?php endif; ?>
+                                <?php if ($model->isVideo()) : ?>
+                                    <video width="320" height="240" controls>
+                                        <source src="<?= Yii::getAlias('@web/') . $model->file_path ?>" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-12">
+                                <?= Html::a('Download', Yii::getAlias('@web/') . $model->file_path, ['class' => 'btn btn-primary', 'download' => $model->tActivity->name . '_' . $model->created_at]) ?>
                             </div>
                         </div>
                     </div>
