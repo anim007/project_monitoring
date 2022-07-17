@@ -13,6 +13,9 @@ use yii\bootstrap4\ActiveForm;
 
 $listPIC = ListComponent::getListBPartner('employee');
 $listVendor = ListComponent::getListBPartner('vendor');
+
+$user           = Yii::$app->user;
+$isPelaksana    = $user->isGuest ? false : array_search('Pelaksana', $user->identity->roles);
 ?>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -33,9 +36,15 @@ $listVendor = ListComponent::getListBPartner('vendor');
                         <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'm_bpartner_id')->widget(Select2::class, WidgetComponent::select2ModelConfig($listVendor, 'PILIH VENDOR')) ?>
                         </div>
-                        <div class="col-sm-12 col-md-6">
-                            <?= $form->field($model, 'pic_id')->widget(Select2::class, WidgetComponent::select2ModelConfig($listPIC, 'PILIH PIC')) ?>
-                        </div>
+                        <?php if ($isPelaksana !== false) : ?>
+                            <div class="col-sm-12 col-md-6">
+                                <?= $form->field($model, 'pic_id')->dropdownList($listPIC, ['disabled' => true]) ?>
+                            </div>
+                        <?php else : ?>
+                            <div class="col-sm-12 col-md-6">
+                                <?= $form->field($model, 'pic_id')->widget(Select2::class, WidgetComponent::select2ModelConfig($listPIC, 'PILIH PIC')) ?>
+                            </div>
+                        <?php endif; ?>
                         <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'start_date')->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
                         </div>

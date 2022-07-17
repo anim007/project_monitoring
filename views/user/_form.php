@@ -1,8 +1,11 @@
 <?php
 
+use app\components\ListComponent;
+use app\components\WidgetComponent;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 use app\models\apps\YUserRole;
+use kartik\select2\Select2;
 use mdm\widgets\GridInput;
 
 /* @var $this yii\web\View */
@@ -21,6 +24,9 @@ use mdm\widgets\GridInput;
                 <div class="card-body">
                     <?= $form->field($model, 'username')->textInput() ?>
                     <?= $form->field($model, 'email')->textInput() ?>
+                    <?= $form->field($model, 'm_bpartner_id')->widget(Select2::class, WidgetComponent::select2ModelConfig(
+                        ListComponent::getListBPartner('employee'), 'Pilih Pegawai'
+                    )) ?>
                     <?= $form->field($model, 'aktif')->checkbox() ?>
                 </div>
             </div>

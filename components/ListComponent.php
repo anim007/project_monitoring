@@ -53,7 +53,7 @@ class ListComponent extends \yii\base\Component
         $datas = MBpartner::find()->where(['status' => '1']);
         if (!is_null($type)) $datas = $datas->andWhere(['type' => $type]);
         $datas = $datas->all();
-        $listData = ArrayHelper::map($datas, 'm_bpartner_id', 'first_name');
+        $listData = ArrayHelper::map($datas, 'm_bpartner_id', function($data) {return $data->first_name . ' ' . $data->last_name; });
 
         return $listData;
     }

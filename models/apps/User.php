@@ -59,7 +59,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'unique', 'targetAttribute' => ['email']],
             [['username', 'email'], 'required', 'on' => ['profile']],
             [['old_password', 'new_password', 're_password'], 'required', 'on' => ['change-password']],
-            [['aktif'], 'integer'],
+            [['aktif', 'm_bpartner_id'], 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
@@ -74,6 +74,7 @@ class User extends ActiveRecord implements IdentityInterface
             'old_password' => Yii::t('app', 'Password Lama'),
             'new_password' => Yii::t('app', 'Password Baru'),
             're_password' => Yii::t('app', 'Ulangi Password Baru'),
+            'm_bpartner_id' => Yii::t('app', 'Karyawan'),
             'aktif' => Yii::t('app', 'Aktif'),
         ];
     }

@@ -54,7 +54,7 @@ class ProjectController extends Controller
         
         $searchModel = new TProjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if ($isPelaksana !== false) $dataProvider->query->andWhere(['created_by' => $user->identity->id]);
+        if ($isPelaksana !== false) $dataProvider->query->andWhere(['pic_id' => $user->identity->m_bpartner_id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -110,6 +110,9 @@ class ProjectController extends Controller
     public function actionCreate()
     {
         $model = new TProject();
+        $user           = Yii::$app->user;
+        $isPelaksana    = $user->isGuest ? false : array_search('Pelaksana', $user->identity->roles);
+        if ($isPelaksana !== false) $model->pic_id = $user->identity->m_bpartner_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
@@ -118,6 +121,7 @@ class ProjectController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'isPelaksana' => $isPelaksana,
         ]);
     }
 
@@ -153,7 +157,14 @@ class ProjectController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if (!empty($model->tActivities) || !empty($model->tDailyReports)) {
+            Yii::$app->session->setFlash('error', "Gagal menghapus project. Project ini sudah memiliki aktifitas!");
+        } else {
+            $model->delete();
+            Yii::$app->session->setFlash('success', "Data Berhasil dihapus.");
+        }
 
         return $this->redirect(['index']);
     }

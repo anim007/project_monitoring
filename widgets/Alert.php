@@ -31,11 +31,11 @@ class Alert extends Widget
      * - value: the bootstrap alert type (i.e. danger, success, info, warning)
      */
     public $alertTypes = [
-        'error'   => 'alert-danger',
-        'danger'  => 'alert-danger',
-        'success' => 'alert-success',
-        'info'    => 'alert-info',
-        'warning' => 'alert-warning'
+        'error'   => 'danger',
+        'danger'  => 'danger',
+        'success' => 'success',
+        'info'    => 'info',
+        'warning' => 'warning'
     ];
     /**
      * @var array the options for rendering the close button tag.
@@ -56,7 +56,7 @@ class Alert extends Widget
 
             foreach ((array) $flash as $i => $message) {
                 echo '<div id="toastsContainerTopRight" class="toasts-top-right fixed">
-                        <div class="toast bg-' . $type . ' fade show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast bg-' . $this->alertTypes[$type] . ' fade show" role="alert" aria-live="assertive" aria-atomic="true">
                             <div class="toast-header">
                                 <i class="mr-2 fas fa-envelope fa-lg"></i>
                                 <strong class="mr-auto">'. ucfirst($type) .' Message!</strong>
