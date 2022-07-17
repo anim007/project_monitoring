@@ -70,13 +70,19 @@ $js=<<< JS
     let btnAdd = $(".fa-plus");
     let btnEdit = $(".fa-pencil-alt");
     let btnDelete = $(".fa-trash-alt");
+
+    let tabPerencanaan = $("#custom-tabs-four-Perencanaan-tab");
+
     if ($readOnly == 1) {
         btnAdd.parent().hide();
         btnEdit.parent().hide();
         btnDelete.parent().hide();
 
         if ($cont === "project" && $action === "actionIndex" && $curRole === "Admin")
-            btnAdd.parent().show();
+            btnDelete.parent().show();
+
+        if ($cont === "project" && $action === "actionView" && $curRole === "Admin")
+            tabPerencanaan.parent().hide();
     }
     // console.log();
 JS;
