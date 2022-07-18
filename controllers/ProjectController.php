@@ -70,7 +70,23 @@ class ProjectController extends Controller
      */
     public function actionView($id)
     {
+        $user           = Yii::$app->user;
+        $isPelaksana    = $user->isGuest ? false : array_search('Pelaksana', $user->identity->roles);
+        $userLoginID    = $user->identity->attributes['m_bpartner_id'];
+        
+        // var_dump($userLoginID); die();
+        
         $model = $this->findModel($id);
+
+        // echo $model->pic_id; die();
+        
+        if ($isPelaksana !== false){
+            if($userLoginID != $model->pic_id){
+                Yii::$app->session->setFlash('error', "Anda bukan penanggung jawab proyek tersebut.");
+                return $this->redirect(['index']);
+            }
+        }
+
         $searchModelPerencanaan = new TActivitySearch();
         $dataProviderPerencanaan = $searchModelPerencanaan->search(Yii::$app->request->queryParams);
         // $dataProviderPerencanaan->query->andWhere(['finish_date' => NULL]);
@@ -134,9 +150,20 @@ class ProjectController extends Controller
      */
     public function actionUpdate($id)
     {
+        $user           = Yii::$app->user;
+        $isPelaksana    = $user->isGuest ? false : array_search('Pelaksana', $user->identity->roles);
+        $userLoginID    = $user->identity->attributes['m_bpartner_id'];  
+
         $model = $this->findModel($id);
         $model->start_date = date('Y-m-d', strtotime($model->start_date));
         $model->finish_date = date('Y-m-d', strtotime($model->finish_date));
+
+        if ($isPelaksana !== false){
+            if($userLoginID != $model->pic_id){
+                Yii::$app->session->setFlash('error', "Anda bukan penanggung jawab proyek tersebut.");
+                return $this->redirect(['index']);
+            }
+        }
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
