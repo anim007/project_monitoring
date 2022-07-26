@@ -29,6 +29,10 @@ use yii\helpers\Url;
 
                 'name',
                 [
+                    'attribute' => 'm_bpartner_id',
+                    'value' => 'mBpartner.first_name',
+                ],
+                [
                     'attribute' => 'type',
                     'value' => function ($model) {
                         return ListComponent::getListActivityType()[$model->type];

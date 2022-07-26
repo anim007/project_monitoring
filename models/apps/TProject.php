@@ -63,6 +63,11 @@ class TProject extends \yii\db\ActiveRecord
             [['pic_id'], 'exist', 'skipOnError' => true, 'targetClass' => MBpartner::className(), 'targetAttribute' => ['pic_id' => 'm_bpartner_id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
+            ['finish_date', function ($attribute, $params, $validator) {
+                if ($this->$attribute < $this->start_date) {
+                    $this->addError($attribute, 'Finish Date tidak boleh kurang dari Start Date!');
+                }
+            }],
         ];
     }
 
@@ -218,5 +223,20 @@ class TProject extends \yii\db\ActiveRecord
         $totProgress = is_null($finish) ? 0 : round($finish / $total * 100, 0);
 
         return $totProgress;
+    }
+
+
+    /**
+     * Get days from finish date and today
+     * 
+     * @return int
+     */
+    public function getIntervalOfFinishDate()
+    {
+        $today  = date_create();
+        $days   = date_diff(date_create($this->finish_date), $today);
+        $msg    = ($days->format('%R') == '-') ? $days->format('%a hari lagi') : $days->format('lewat %a hari');
+        
+        return $msg;
     }
 }

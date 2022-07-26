@@ -55,7 +55,7 @@ class TActivity extends \yii\db\ActiveRecord
     {
         return [
             [['t_project_id', 'name', 'heaviness', 'start_date', 'est_finish_date', 'type', 'status'], 'required'],
-            [['t_project_id', 'heaviness', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['t_project_id', 'm_bpartner_id', 'heaviness', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['descripiton'], 'string'],
             [['start_date', 'est_finish_date', 'finish_date'], 'safe'],
             [['name'], 'string', 'max' => 255],
@@ -63,6 +63,16 @@ class TActivity extends \yii\db\ActiveRecord
             [['t_project_id'], 'exist', 'skipOnError' => true, 'targetClass' => TProject::className(), 'targetAttribute' => ['t_project_id' => 'm_project_id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
+            ['est_finish_date', function ($attribute, $params, $validator) {
+                if ($this->$attribute < $this->start_date) {
+                    $this->addError($attribute, 'Est Finish Date tidak boleh kurang dari Start Date!');
+                }
+            }],
+            ['finish_date', function ($attribute, $params, $validator) {
+                if ($this->$attribute < $this->start_date) {
+                    $this->addError($attribute, 'Finish Date tidak boleh kurang dari Start Date!');
+                }
+            }],
         ];
     }
 
@@ -74,6 +84,7 @@ class TActivity extends \yii\db\ActiveRecord
         return [
             't_activity_id' => Yii::t('app', 'Activity ID'),
             't_project_id' => Yii::t('app', 'Project'),
+            'm_bpartner_id' => Yii::t('app', 'Vendor'),
             'name' => Yii::t('app', 'Name'),
             'descripiton' => Yii::t('app', 'Descripiton'),
             'heaviness' => Yii::t('app', 'Heaviness'),
@@ -127,5 +138,30 @@ class TActivity extends \yii\db\ActiveRecord
     public function getTActivityDocs()
     {
         return $this->hasMany(TActivityDoc::className(), ['t_activity_id' => 't_activity_id']);
+    }
+
+    /**
+     * Gets query for [[MBpartner]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMBpartner()
+    {
+        return $this->hasOne(MBpartner::className(), ['m_bpartner_id' => 'm_bpartner_id']);
+    }
+
+
+    /**
+     * Get days from finish date and today
+     * 
+     * @return int
+     */
+    public function getIntervalOfFinishDate()
+    {
+        $today  = date_create();
+        $days   = date_diff(date_create($this->finish_date), $today);
+        $msg    = ($days->format('%R') == '-') ? $days->format('%a hari lagi') : $days->format('lewat %a hari');
+        
+        return $msg;
     }
 }

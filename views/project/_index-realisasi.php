@@ -22,16 +22,27 @@ use yii\helpers\Url;
 
                 'name',
                 [
+                    'attribute' => 'm_bpartner_id',
+                    'value' => 'mBpartner.first_name',
+                ],
+                [
                     'attribute' => 'type',
                     'value' => function ($model) {
                         return ListComponent::getListActivityType()[$model->type];
                     }
                 ],
-                'descripiton:ntext',
+                // 'descripiton:ntext',
                 'heaviness',
                 'start_date:date',
                 'est_finish_date:date',
                 'finish_date:date',
+                [
+                    'label' => 'Rest of day',
+                    'value' => function($model) {
+                        $interval   = !is_null($model->finish_date) ? ' (' . $model->intervalOfFinishDate . ')' : '';
+                        return $interval;
+                    }
+                ],
                 [
                     'attribute' => 'status',
                     'value' => function ($model) {

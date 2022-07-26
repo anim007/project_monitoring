@@ -130,7 +130,7 @@ class ProjectController extends Controller
         $isPelaksana    = $user->isGuest ? false : array_search('Pelaksana', $user->identity->roles);
         if ($isPelaksana !== false) $model->pic_id = $user->identity->m_bpartner_id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
             return $this->redirect(['index']);
         }
@@ -165,7 +165,7 @@ class ProjectController extends Controller
             }
         }
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())  && $model->validate() && $model->save()) {
             Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
             return $this->redirect(['index']);
         }

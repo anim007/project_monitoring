@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'file_path:ntext',
                                 'description:ntext',
                                 'date',
+                                'is_verified:boolean',
                                 //'created_at',
                                 //'created_by',
                                 //'updated_at',

@@ -78,8 +78,10 @@ $js=<<< JS
         btnEdit.parent().hide();
         btnDelete.parent().hide();
 
-        if ($cont === "project" && $action === "actionIndex" && $curRole === "Admin")
+        if ($cont === "project" && $action === "actionIndex" && $curRole === "Admin") {
             btnDelete.parent().show();
+            btnAdd.parent().show();
+        }
 
         if ($cont === "project" && $action === "actionView" && $curRole === "Admin")
             tabPerencanaan.parent().hide();

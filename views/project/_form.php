@@ -50,6 +50,7 @@ $isPelaksana    = $user->isGuest ? false : array_search('Pelaksana', $user->iden
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'finish_date')->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
+                            <?= Html::error($model, 'finish_date', ['class' => 'invalid-feedback d-block']); ?>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'status')->dropdownList(ListComponent::getListProjectStatus()) ?>

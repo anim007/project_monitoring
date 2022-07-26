@@ -31,6 +31,8 @@ use yii\bootstrap4\ActiveForm;
                         </div>
                     </div>
                     <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
+                    
+                    <?= $form->field($model, 'is_verified')->checkbox() ?>
                 </div>
                 <div class="card-footer">
                     <div class="form-actions text-right">

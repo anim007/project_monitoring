@@ -3,12 +3,16 @@
 use app\components\ListComponent;
 use app\components\WidgetComponent;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\apps\TActivity */
 /* @var $form yii\bootstrap4\ActiveForm */
+
+$listVendor = ListComponent::getListBPartner('vendor');
+
 ?>
 <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -20,8 +24,11 @@ use yii\bootstrap4\ActiveForm;
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 't_project_id')->dropdownList(ListComponent::getListProject(), ['disabled' => true]) ?>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <?= $form->field($model, 'm_bpartner_id')->widget(Select2::class, WidgetComponent::select2ModelConfig($listVendor, 'PILIH VENDOR')) ?>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
@@ -45,9 +52,11 @@ use yii\bootstrap4\ActiveForm;
                         </div>
                         <div class="col-sm-12 col-md-4">
                             <?= $form->field($model, 'est_finish_date')->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
+                            <?= Html::error($model, 'est_finish_date', ['class' => 'invalid-feedback d-block']); ?>
                         </div>
                         <div class="col-sm-12 col-md-4">
                             <?= $form->field($model, 'finish_date', ['options' => ['style' => $model->status != 'finish' ? 'display: none;' : 'display: ;']])->widget(DatePicker::class, WidgetComponent::datePickerConfig()) ?>
+                            <?= Html::error($model, 'finish_date', ['class' => 'invalid-feedback d-block']); ?>
                         </div>
                     </div>
                 </div>

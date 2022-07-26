@@ -29,6 +29,13 @@ $listVendor = ListComponent::getListBPartner('vendor');
                     'start_date:date',
                     'finish_date:date',
                     [
+                        'label' => 'Rest of Day',
+                        'value' => function($model) {
+                            $interval   = !is_null($model->finish_date) ? ' (' . $model->intervalOfFinishDate . ')' : '';
+                            return $interval;
+                        }
+                    ],
+                    [
                         'label' => 'Status',
                         'value' => function ($model) {
                             return \app\components\ListComponent::getListProjectStatus()[$model->status];

@@ -36,11 +36,11 @@ use yii\helpers\Url;
                 'date:date',
                 // 'file_path:ntext',
                 'description:ntext',
-
+                'is_verified:boolean',
                 [
                     'class' => 'app\widgets\ActionColumn',
                     'headerOptions' => ['width' => '100'],
-                    'template' => '{view} {delete}',
+                    'template' => '{view} {update} {delete}',
                     'urlCreator' => function ($action, $model, $key, $index) {
                         if ($action === 'view') {
                             $url = Url::to(['/activity-doc/view', 'id' => $model->t_activity_doc_id, 'project_id' => $model->t_project_id]);

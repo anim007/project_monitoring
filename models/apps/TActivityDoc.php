@@ -13,6 +13,7 @@ use Yii;
  * @property string|null $file_path
  * @property string|null $description
  * @property string|null $date
+ * @property int $is_verified
  * @property int $created_at
  * @property int $created_by
  * @property int $updated_at
@@ -53,11 +54,11 @@ class TActivityDoc extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['t_activity_id', 't_project_id', 'description', 'file_path', 'date'], 'required'],
+            [['t_activity_id', 't_project_id', 'description', 'file_path', 'is_verified', 'date'], 'required'],
             [['t_activity_id', 't_project_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['file_path', 'description'], 'string'],
             [['date'], 'safe'],
-            [['file1'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, jpeg, mp4, mpg, mkv, wmv, avi'],
+            [['file1'], 'file', 'skipOnEmpty' => true, 'extensions' => 'jpg, png, jpeg, mp4, mpg, mkv, wmv, avi, pdf'],
             [['t_activity_id'], 'exist', 'skipOnError' => true, 'targetClass' => TActivity::className(), 'targetAttribute' => ['t_activity_id' => 't_activity_id']],
             [['t_project_id'], 'exist', 'skipOnError' => true, 'targetClass' => TProject::className(), 'targetAttribute' => ['t_project_id' => 'm_project_id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -78,6 +79,7 @@ class TActivityDoc extends \yii\db\ActiveRecord
             'file1' => Yii::t('app', 'Attachment'),
             'description' => Yii::t('app', 'Description'),
             'date' => Yii::t('app', 'Date'),
+            'is_verified' => Yii::t('app', 'Is Valid?'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_at' => Yii::t('app', 'Updated At'),

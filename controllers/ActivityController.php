@@ -83,7 +83,7 @@ class ActivityController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if(Yii::$app->request->post()['TActivity']['status'] != 'finish') $model->finish_date = null;
 
-            if($model->save()){
+            if($model->validate() && $model->save()){
                 Yii::$app->session->setFlash('success', "Data Berhasil disimpan.");
                 
                 if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
@@ -122,7 +122,7 @@ class ActivityController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             if(Yii::$app->request->post()['TActivity']['status'] != 'finish') $model->finish_date = null;
 
-            if($model->save()){
+            if($model->validate() && $model->save()){
                 Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
                 
                 if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);

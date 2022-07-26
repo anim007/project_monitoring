@@ -48,6 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'start_date:date',
                                 'finish_date:date',
                                 [
+                                    'label' => 'Rest of Day',
+                                    'value' => function($model) {
+                                        $interval   = !is_null($model->finish_date) ? ' (' . $model->intervalOfFinishDate . ')' : '';
+                                        return $interval;
+                                    }
+                                ],
+                                [
                                     'attribute' => 'status',
                                     'value' => function ($model) {
                                         return ListComponent::getListProjectStatus()[$model->status];
