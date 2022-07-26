@@ -102,12 +102,16 @@ class ActivityDocController extends Controller
         $model = $this->findModel($id);
         $project = TProject::findOne($project_id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
+        if ($model->load(Yii::$app->request->post())) {
+            $model->uploadFile('file_path', 'file1');
 
-            if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+            if($model->save()){
+                Yii::$app->session->setFlash('success', "Data Berhasil diubah.");
 
-            return $this->redirect(['index']);
+                if (!is_null($project_id)) return $this->redirect(['/project/view', 'id' => $project_id]);
+
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [

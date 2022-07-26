@@ -59,6 +59,10 @@ $this->params['breadcrumbs'][] = $activity->name;
                                         Your browser does not support the video tag.
                                     </video>
                                 <?php endif; ?>
+                                <?php if ($model->isPdf()) : ?>
+                                    <!-- <img src="<?= Yii::getAlias('@web/') . $model->file_path ?>" alt="image" class="img-thumbnail" width="100%"> -->
+                                    <embed type="application/pdf" src="<?= Yii::getAlias('@web/') . $model->file_path ?>" width="100%" height="400"></embed>
+                                <?php endif; ?>
                             </div>
                             <div class="col-12">
                                 <?= Html::a('Download', Yii::getAlias('@web/') . $model->file_path, ['class' => 'btn btn-primary', 'download' => $model->tActivity->name . '_' . $model->created_at]) ?>

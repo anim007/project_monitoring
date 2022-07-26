@@ -178,4 +178,13 @@ class TActivityDoc extends \yii\db\ActiveRecord
 
         return $bool;
     }
+
+    public function isPdf()
+    {
+        $video = ['pdf'];
+        $format = is_null($this->file_path) ? null : substr($this->file_path, -3, 3);
+        $bool = array_search($format, $video) !== false ? true : false;
+
+        return $bool;
+    }
 }
