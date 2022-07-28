@@ -43,6 +43,13 @@ use yii\helpers\Url;
                 'start_date:date',
                 'est_finish_date:date',
                 [
+                    'label' => 'Rest of day',
+                    'value' => function($model) {
+                        $interval   = !is_null($model->finish_date) ? ' (' . $model->intervalOfFinishDate . ')' : '';
+                        return $interval;
+                    }
+                ],
+                [
                     'attribute' => 'status',
                     'value' => function ($model) {
                         return ListComponent::getListActivityStatus()[$model->status];

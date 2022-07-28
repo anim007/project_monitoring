@@ -70,8 +70,12 @@ $js=<<< JS
     let btnAdd = $(".fa-plus");
     let btnEdit = $(".fa-pencil-alt");
     let btnDelete = $(".fa-trash-alt");
+    let cbValid  = $(".field-tactivitydoc-is_verified");
+    cbValid.hide();
 
     let tabPerencanaan = $("#custom-tabs-four-Perencanaan-tab");
+
+    if ($curRole === "Manager") {cbValid.show();}
 
     if ($readOnly == 1) {
         btnAdd.parent().hide();

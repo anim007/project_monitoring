@@ -159,7 +159,7 @@ class TActivity extends \yii\db\ActiveRecord
     public function getIntervalOfFinishDate()
     {
         $today  = date_create();
-        $days   = date_diff(date_create($this->finish_date), $today);
+        $days   = date_diff(date_create($this->est_finish_date), $today);
         $msg    = ($days->format('%R') == '-') ? $days->format('%a hari lagi') : $days->format('lewat %a hari');
         
         return $msg;

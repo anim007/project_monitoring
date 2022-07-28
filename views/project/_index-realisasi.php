@@ -35,7 +35,6 @@ use yii\helpers\Url;
                 'heaviness',
                 'start_date:date',
                 'est_finish_date:date',
-                'finish_date:date',
                 [
                     'label' => 'Rest of day',
                     'value' => function($model) {
@@ -43,6 +42,7 @@ use yii\helpers\Url;
                         return $interval;
                     }
                 ],
+                'finish_date:date',
                 [
                     'attribute' => 'status',
                     'value' => function ($model) {

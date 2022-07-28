@@ -4,6 +4,13 @@ use app\components\ListComponent;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$user       = Yii::$app->user;
+$curRole    = '';
+$roleMenus  = \app\models\apps\YRoleMenu::find()->where(['in', 'y_role_id', $user->identity->yRoleIDs])->orderBy('y_menu_id')->all();
+foreach ($roleMenus as $k => $v) {
+    $curRole = '"' . $v->yRole->nama . '"';
+}
+
 ?>
 
 <div class="row mb-2">
@@ -27,21 +34,21 @@ use yii\helpers\Url;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                // [
-                //     'attribute' => 't_project_id',
-                //     'value' => function ($model) {
-                //         return $model->tProject->name;
-                //     }
-                // ],
                 'date:date',
-                // 'file_path:ntext',
                 'description:ntext',
                 'is_verified:boolean',
                 [
                     'class' => 'app\widgets\ActionColumn',
                     'headerOptions' => ['width' => '100'],
                     'template' => '{view} {update} {delete}',
-                    'urlCreator' => function ($action, $model, $key, $index) {
+                    'buttons' => [
+                        'update' => function ($url, $model) {
+                            return Html::a('<button id="edit-doc" class="btn btn-sm btn-primary"><i class="fas fa-pencil-alt"></i></button>', $url, [
+                                'title' => 'Update',
+                            ]);
+                        },
+                    ],
+                     'urlCreator' => function ($action, $model, $key, $index) {
                         if ($action === 'view') {
                             $url = Url::to(['/activity-doc/view', 'id' => $model->t_activity_doc_id, 'project_id' => $model->t_project_id]);
                             return $url;
@@ -61,3 +68,19 @@ use yii\helpers\Url;
     </div>
     <?php \yii\widgets\Pjax::end(); ?>
 </div>
+
+<?php 
+$js=<<< JS
+console.log('cbValid');
+    let btnEdits = $("#edit-doc");
+    
+    setTimeout(function() {        
+        if ($curRole === "Manager") {
+            btnEdits.show();
+        }
+    }, 500);
+    
+JS;
+
+$this->registerJs($js, yii\web\View::POS_READY);
+?>
