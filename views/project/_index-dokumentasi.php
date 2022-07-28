@@ -71,7 +71,6 @@ foreach ($roleMenus as $k => $v) {
 
 <?php 
 $js=<<< JS
-console.log('cbValid');
     let btnEdits = $("#edit-doc");
     
     setTimeout(function() {        
